@@ -1,4 +1,4 @@
-# Data Reactor
+# UDB Reactor
 
 This Cyclus Reactor module is created towards the project
 to benchmark Cyclus with ORION UNF-ST&DARDS benchmark.
