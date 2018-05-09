@@ -17,7 +17,7 @@ actual reactor in the database. This way, we can model
 the historical UNF discharge by tracking
 individual reactors in the U.S as an agent.
 
-**less bro-y**
+**Placeholder**
 I'm guessing this will be different from ORION, and allow
 interesting analyses like the GIS mapping and burn-up
 characterization by reactor.
