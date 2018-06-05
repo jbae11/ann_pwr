@@ -72,9 +72,9 @@ class udb_reactor(Facility):
             # [:-3] gets rid of the day
             if val[0][:-3] == year_month:
                 total_mass = val[1]
-                try:
+                if self.recipe_name != '':
                     composition = self.context.get_recipe(self.recipe_name)
-                except:
+                else:
                     composition = {}
                     discharged = self.cur.execute('SELECT isotope, '
                                                   'total_mass_g FROM discharge WHERE '
@@ -82,8 +82,6 @@ class udb_reactor(Facility):
                     for row in discharged:
                         composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
                 material = ts.Material.create(self, total_mass, composition)
-                self.write('WHAT')
-                print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass)
                 self.inventory.push(material)
 
 
