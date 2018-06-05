@@ -63,7 +63,6 @@ for reactor_id in id_list:
             <outcommod>fuel</outcommod>
             <reactor_id>%i</reactor_id>
             <db_path>%s</db_path>
-            <use_recipe>1</use_recipe>
             <recipe_name>used_fuel_recipe</recipe_name>
           </udb_reactor>
         </config>
@@ -75,8 +74,7 @@ archetype_file += "</root>"
 with open('./archetype_recipe.xml', 'w') as f:
     f.write(archetype_file)
 
-archetype_without_recipe = archetype_file.replace('<use_recipe>1</use_recipe>\n', '')
-archetype_without_recipe = archetype_without_recipe.replace('<recipe_name>used_fuel_recipe</recipe_name>\n', '')
+archetype_without_recipe = archetype_file.replace('<recipe_name>used_fuel_recipe</recipe_name>\n', '')
 with open('./archetype.xml', 'w') as f:
     f.write(archetype_without_recipe)
 
@@ -104,6 +102,10 @@ xml_file += """
     <institution>
       <name>udb_reactor_inst</name>
       <initialfacilitylist>
+      <entry>
+        <prototype>sink</prototype>
+        <number>1</number>
+      </entry>
 """
 
 entry_file = "<root>"
