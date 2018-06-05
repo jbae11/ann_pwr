@@ -2,7 +2,7 @@ import sqlite3 as lite
 import os
 
 db_path = '/home/teddy/github/udb_reactor/db/1yr.sqlite'
-output_path = 'output.xml'
+output_path = 'input.xml'
 archetype_path = 'archetype.xml'
 entry_path = "entry.xml"
 
