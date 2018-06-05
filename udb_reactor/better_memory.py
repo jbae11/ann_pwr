@@ -38,7 +38,7 @@ class udb_reactor(Facility):
 
     def write(self, string):
         # for debugging purposes.
-        with open('log.txt', 'a+') as f:
+        with open('log.txt', 'a') as f:
             f.write(string + '\n')
 
     def enter_notify(self):
@@ -46,41 +46,37 @@ class udb_reactor(Facility):
         conn = lite.connect(self.db_path)
         conn.row_factory = lite.Row
         self.cur = conn.cursor()
-        assembly_ids = self.cur.execute('SELECT distinct(assembly_id), evaluation_date, '
-                                        'initial_uranium_kg FROM discharge '
-                                        'WHERE reactor_id = %i' %self.reactor_id).fetchall()
-        self.assembly_discharge_dict = {}
+        self.assembly_ids = self.cur.execute('SELECT distinct(assembly_id) FROM discharge '
+                                  'WHERE reactor_id = %i' %reactor_id).fetchall()
         for assembly in assembly_ids:
-            self.assembly_discharge_dict[assembly['assembly_id']] = [assembly['evaluation_date'],
-                                                                     assembly['initial_uranium_kg']]
+            print(assembly['assembly_id'])
         # can't find a way to get it from framework
         self.startyear = 1969
         self.startmonth = 1
 
     def tick(self):
-        self.write('tick' + str(self.context.time))
+        self.write('Tick')
         year_month = self.find_year_month()
         # filter 1: reactorid
         # filter 2: time
-        for key, val in self.assembly_discharge_dict.items():
-            # [:-3] gets rid of the day
-            if val[0][:-3] == year_month:
-                total_mass = val[1]
-                composition = {}
-                discharged = self.cur.execute('SELECT isotope, '
-                                              'total_mass_g FROM discharge WHERE '
-                                              'assembly_id = %i' %key).fetchall()
-                for row in discharged:
-                    composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
-                    self.write(row['isotope'].capitalize())
-                    self.write(str(row['total_mass_g']))
-                self.write('HERE')
-                material = ts.Material.create(self, total_mass, composition)
-                self.write('material is pushed')
-                print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass)
-                self.inventory.push(material)
-                self.write(str(self.inventory.quantity))
+        for assembly in self.assembly_ids:
+            composition = {}
+            discharged = self.cur.exeucte('SELECT assembly_id, initial_uranium_kg, '
+                                     'evaluation_date, isotope, total_mass_g '
+                                     'FROM discharge WHERE evaluation_date = '
+                                     '"%s" AND assembly_id = '
+                                     '%i' %(year_month, assembly['assembly_id'])).fetchall()
+            for row in discharged:
+                total_mass = discharged['initial_uranium_kg']
+                composition[discharged['isotope']] = discharged['total_mass_g'] * 1e-3 / total_mass
+            material = ts.Material.create(self, total_mass, composition)
+            print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass )
+            self.inventory.push(material)
+            self.write(str(self.inventory.quantity))
 
+
+    def tock(self):
+        self.write('Tock')
 
     def get_material_bids(self, requests):
         """ Gets material bids that want its `outcommod' an
