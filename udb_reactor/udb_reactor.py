@@ -25,6 +25,11 @@ class udb_reactor(Facility):
         uilabel="Output Commodity"
     )
 
+    db_path = ts.String(
+        doc="Path to the sqlite file of udb data",
+        tooltip="Absolute path to the udb sqlite data"
+    )
+
     inventory = ts.ResBufMaterialInv()
 
 
@@ -36,21 +41,42 @@ class udb_reactor(Facility):
         with open('log.txt', 'a') as f:
             f.write(string + '\n')
 
+    def enter_notify(self):
+        super().enter_notify()
+        conn = lite.connect(self.db_path)
+        conn.row_factory = lite.Row
+        self.cur = conn.cursor()
+
+        # can't find a way to get it from framework
+        self.startyear = 1969
+        self.startmonth = 1
+
+    def tick(self):
+        self.write('Tick')
+        year_month = self.find_year_month()
+        # filter 1: reactorid
+        # filter 2: time
+        assembly_ids = self.cur.execute('SELECT distinct(assembly_id) FROM '
+                                   'discharge WHERE evaluation_date = '
+                                   '"%s" AND reactor_id = %i' %(year_month, self.reactor_id)).fetchall()
+        for assembly in assembly_ids:
+            composition = {}
+            discharged = self.cur.exeucte('SELECT assembly_id, initial_uranium_kg, '
+                                     'evaluation_date, isotope, total_mass_g '
+                                     'FROM discharge WHERE evaluation_date = '
+                                     '"%s" AND reactor_id = %i AND assembly_id = '
+                                     '%i' %(year_month, self.reactor_id, assembly['assembly_id'])).fetchall()
+            for row in discharged:
+                total_mass = discharged['initial_uranium_kg']
+                composition[discharged['isotope']] = discharged['total_mass_g'] * 1e-3 / total_mass
+            material = ts.Material.create(self, total_mass, composition)
+            print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass )
+            self.inventory.push(material)
+            self.write(str(self.inventory.quantity))
+
 
     def tock(self):
         self.write('Tock')
-        # Example dummy material
-        # this should be replaced with material
-        # from the UDB database
-        composition = {922350000: 5,
-                       922380000: 95}
-        material = ts.Material.create(self, 100, composition)
-
-        # stores the planned spent fuel into inventory buffer
-        # for it to be offered to the market
-        self.inventory.push(material)
-        self.write(str(self.inventory.quantity))
-
 
     def get_material_bids(self, requests):
         """ Gets material bids that want its `outcommod' an
@@ -76,7 +102,15 @@ class udb_reactor(Facility):
     def get_material_trades(self, trades):
         responses = {}
         for trade in trades:
-            print(trade)
             mat = self.inventory.pop()
             responses[trade] = mat
         return responses
+
+    def find_year_month(self):
+        time = self.context.time
+        year = self.startyear + time // 12
+        month = self.startmonth + time % 12
+        if month < 10:
+            return (str(year) + '-0' + str(month))
+        else:
+            return (str(year) + '-' + str(month))
