@@ -30,6 +30,18 @@ class udb_reactor(Facility):
         tooltip="Absolute path to the udb sqlite data"
     )
 
+    use_recipe = ts.Bool(
+        doc="if True, uses the recipe composition",
+        tooltip="Flag for using the recipe composition",
+        default=0
+    )
+
+    recipe_name = ts.String(
+        doc="if using recipe, this parameter holds the recipe name",
+        tooltip="recipe to be used for recipe composition",
+        default='NULL'
+    )
+
     inventory = ts.ResBufMaterialInv()
 
 
@@ -66,12 +78,15 @@ class udb_reactor(Facility):
             # [:-3] gets rid of the day
             if val[0][:-3] == year_month:
                 total_mass = val[1]
-                composition = {}
-                discharged = self.cur.execute('SELECT isotope, '
-                                              'total_mass_g FROM discharge WHERE '
-                                              'assembly_id = %i' %key).fetchall()
-                for row in discharged:
-                    composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
+                if use_recipe:
+                    composition = self.context.get_recipe(recipe_name)
+                else:
+                    composition = {}
+                    discharged = self.cur.execute('SELECT isotope, '
+                                                  'total_mass_g FROM discharge WHERE '
+                                                  'assembly_id = %i' %key).fetchall()
+                    for row in discharged:
+                        composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
                 material = ts.Material.create(self, total_mass, composition)
                 print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass)
                 self.inventory.push(material)
