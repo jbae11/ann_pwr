@@ -12,8 +12,8 @@ class udb_reactor_manager(Institution):
         tooltip="Absolute path to the udb sqlite data"
     )
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def enter_notify(self):
         super().enter_notify()
@@ -22,4 +22,4 @@ class udb_reactor_manager(Institution):
         reactor_ids = cur.execute('SELECT distinct(reactor_id) FROM '
                                   'discharge').fetchall()
         for reactor in reactor_ids:
-            self.context.schedule_build(self, reactor)
+            self.context.schedule_build(self, reactor['reactor_id'])

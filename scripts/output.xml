@@ -1,0 +1,60 @@
+
+<simulation xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <archetypes>
+    <spec>
+      <lib>agents</lib>
+      <name>NullRegion</name>
+    </spec>
+    <spec>
+      <lib>agents</lib>
+      <name>NullInst</name>
+    </spec>
+    <spec>
+      <lib>cycamore</lib>
+      <name>Sink</name>
+    </spec>
+    <spec>
+      <lib>udb_reactor.udb_reactor</lib>
+      <name>udb_reactor</name>
+    </spec>
+  </archetypes>
+
+  <control>
+    <duration>612</duration>
+    <startmonth>1</startmonth>
+    <startyear>1969</startyear>
+    <decay>manual</decay>
+  </control>
+
+
+
+
+  <xi:include href="archetype.xml" xpointer="xpointer(/root/facility)"/>
+
+  <facility>
+    <name>sink</name>
+    <config>
+      <Sink>
+        <in_commods><val>fuel</val></in_commods>
+        <capacity>1e100</capacity>
+      </Sink>
+    </config>
+  </facility>
+
+
+<region>
+    <name>SingleRegion</name>
+    <config><NullRegion/></config>
+    <institution>
+      <name>udb_reactor_inst</name>
+      <initialfacilitylist>
+
+      <xi:include href="entry.xml" xpointer="xpointer(/root/entry)"/>
+      </initialfacilitylist>
+      <config>
+      <NullInst/>
+      </config>
+    </institution>
+  </region>
+</simulation>

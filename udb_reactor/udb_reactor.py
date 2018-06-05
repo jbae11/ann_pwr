@@ -72,14 +72,9 @@ class udb_reactor(Facility):
                                               'assembly_id = %i' %key).fetchall()
                 for row in discharged:
                     composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
-                    self.write(row['isotope'].capitalize())
-                    self.write(str(row['total_mass_g']))
-                self.write('HERE')
                 material = ts.Material.create(self, total_mass, composition)
-                self.write('material is pushed')
                 print('PUSHED %f OF FUEL TO INVENTORY BUFFER' %total_mass)
                 self.inventory.push(material)
-                self.write(str(self.inventory.quantity))
 
 
     def get_material_bids(self, requests):
