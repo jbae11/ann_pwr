@@ -38,6 +38,14 @@ xml_file = """
       <name>Sink</name>
     </spec>
     <spec>
+      <lib>cycamore</lib>
+      <name>DeployInst</name>
+    </spec>
+    <spec>
+      <lib>cycamore</lib>
+      <name>Storage</name>
+    </spec>
+    <spec>
       <lib>udb_reactor.udb_reactor</lib>
       <name>udb_reactor</name>
     </spec>
@@ -48,7 +56,7 @@ xml_file = """
     <duration>619</duration>
     <startmonth>1</startmonth>
     <startyear>1969</startyear>
-    <decay>manual</decay>
+    <decay>lazy</decay>
   </control>
 
 
@@ -83,15 +91,33 @@ xml_file += """
 
   <xi:include href="./archetype_recipe.xml" xpointer="xpointer(/root/facility)"/>
 
-  <facility>
-    <name>sink</name>
-    <config>
-      <Sink>
-        <in_commods><val>fuel</val></in_commods>
-        <capacity>1e100</capacity>
-      </Sink>
-    </config>
-  </facility>
+    <facility>
+        <name>storage</name>
+        <config>
+            <Storage>
+                <in_commods>
+                    <val>fuel</val>
+                </in_commods>
+                <out_commods>
+                    <val>fuel_decayed</val>
+                </out_commods>
+            </Storage>
+        </config>
+    </facility>
+
+
+    <facility>
+        <name>sink</name>
+        <config>
+            <Sink>
+                <in_commods>
+                    <val>fuel_decayed</val>
+                </in_commods>
+                <capacity>1e299</capacity>
+            </Sink>
+        </config>
+    </facility>
+
 """
 
 xml_file += """
@@ -103,7 +129,7 @@ xml_file += """
       <name>udb_reactor_inst</name>
       <initialfacilitylist>
       <entry>
-        <prototype>sink</prototype>
+        <prototype>storage</prototype>
         <number>1</number>
       </entry>
 """
@@ -127,6 +153,25 @@ xml_file += """
       <NullInst/>
       </config>
     </institution>
+     <institution>
+            <name>fac</name>
+            <config>
+                <DeployInst>
+                    <prototypes>
+                        <val>sink</val>
+                    </prototypes>
+                    <build_times>
+                        <val>617</val>
+                    </build_times>
+                    <n_build>
+                        <val>1</val>
+                   </n_build>
+                    <lifetimes>
+                        <val>9999</val>
+                    </lifetimes>
+                </DeployInst>
+            </config>
+        </institution>
   </region>
 """
 
