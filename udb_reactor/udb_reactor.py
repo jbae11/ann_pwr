@@ -64,10 +64,7 @@ class udb_reactor(Facility):
         self.startmonth = 1
 
     def tick(self):
-        self.write('tick' + str(self.context.time))
         year_month = self.find_year_month()
-        # filter 1: reactorid
-        # filter 2: time
         for key, val in self.assembly_discharge_dict.items():
             # [:-3] gets rid of the day
             if val[0][:-3] == year_month:
@@ -109,8 +106,13 @@ class udb_reactor(Facility):
     def get_material_trades(self, trades):
         responses = {}
         for trade in trades:
-            mat = self.inventory.pop()
-            responses[trade] = mat
+            mat_list = self.inventory.pop_n(self.inventory.count)
+            self.countz += 1
+            # absorb all materials
+            # best way is to do it separately, but idk how to do it :(
+            for mat in mat_list[1:]:
+                mat_list[0].absorb(mat)
+            responses[trade] = mat_list[0]
         return responses
 
     def find_year_month(self):
