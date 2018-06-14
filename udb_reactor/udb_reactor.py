@@ -107,7 +107,6 @@ class udb_reactor(Facility):
         responses = {}
         for trade in trades:
             mat_list = self.inventory.pop_n(self.inventory.count)
-            self.countz += 1
             # absorb all materials
             # best way is to do it separately, but idk how to do it :(
             for mat in mat_list[1:]:
