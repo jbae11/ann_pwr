@@ -52,13 +52,13 @@ class udb_reactor(Facility):
         conn = lite.connect(self.db_path)
         conn.row_factory = lite.Row
         self.cur = conn.cursor()
-        assembly_ids = self.cur.execute('SELECT distinct(assembly_id), evaluation_date, '
-                                        'initial_uranium_kg FROM discharge '
-                                        'WHERE reactor_id = %i' %self.reactor_id).fetchall()
+        assembly_ids = self.cur.execute('SELECT assembly_id, evaluation_date, '
+                                        'sum(total_mass_g) FROM discharge '
+                                        'WHERE reactor_id = %i GROUP BY assembly_id' %self.reactor_id).fetchall()
         self.assembly_discharge_dict = {}
         for assembly in assembly_ids:
             self.assembly_discharge_dict[assembly['assembly_id']] = [assembly['evaluation_date'],
-                                                                     assembly['initial_uranium_kg']]
+                                                                     assembly['sum(total_mass_g)']]
         # can't find a way to get it from framework
         self.startyear = 1969
         self.startmonth = 1
