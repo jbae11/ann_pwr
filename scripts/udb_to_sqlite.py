@@ -1,8 +1,8 @@
 import sqlite3
 import os
 
-dat_file_name = 'SNF_nuclide_1yr_Cooling(1).dat'
-sqlite_name = '1yr.sqlite'
+dat_file_name = 'SNF_nuclide_2020_07_01.dat'
+sqlite_name = '../db/2020.sqlite'
 
 # delete file if exists
 try:
@@ -42,4 +42,5 @@ for row in rows[1:]:
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) """
     cur.execute(query, values)
 
-
+conn.commit()
+conn.close()
