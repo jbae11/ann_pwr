@@ -58,7 +58,7 @@ class udb_reactor(Facility):
         self.assembly_discharge_dict = {}
         for assembly in assembly_ids:
             self.assembly_discharge_dict[assembly['assembly_id']] = [assembly['evaluation_date'],
-                                                                     assembly['sum(total_mass_g)']]
+                                                                     assembly['sum(total_mass_g)'] / 1e3]
         # can't find a way to get it from framework
         self.startyear = 1969
         self.startmonth = 1
