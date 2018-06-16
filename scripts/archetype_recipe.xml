@@ -5,7 +5,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>122</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>122</name>
     </facility>
@@ -16,7 +17,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>123</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>123</name>
     </facility>
@@ -27,7 +29,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>124</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>124</name>
     </facility>
@@ -38,7 +41,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>125</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>125</name>
     </facility>
@@ -49,7 +53,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>126</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>126</name>
     </facility>
@@ -60,7 +65,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>127</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>127</name>
     </facility>
@@ -71,7 +77,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>128</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>128</name>
     </facility>
@@ -82,7 +89,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>129</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>129</name>
     </facility>
@@ -93,7 +101,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>130</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>130</name>
     </facility>
@@ -104,7 +113,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>131</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>131</name>
     </facility>
@@ -115,7 +125,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>132</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>132</name>
     </facility>
@@ -126,7 +137,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>133</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>133</name>
     </facility>
@@ -137,7 +149,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>134</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>134</name>
     </facility>
@@ -148,7 +161,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>135</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>135</name>
     </facility>
@@ -159,7 +173,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>136</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>136</name>
     </facility>
@@ -170,7 +185,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>137</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>137</name>
     </facility>
@@ -181,7 +197,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>138</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>138</name>
     </facility>
@@ -192,7 +209,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>139</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>139</name>
     </facility>
@@ -203,7 +221,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>140</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>140</name>
     </facility>
@@ -214,7 +233,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>141</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>141</name>
     </facility>
@@ -225,7 +245,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>142</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>142</name>
     </facility>
@@ -236,7 +257,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>143</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>143</name>
     </facility>
@@ -247,7 +269,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>144</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>144</name>
     </facility>
@@ -258,7 +281,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>145</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>145</name>
     </facility>
@@ -269,7 +293,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>146</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>146</name>
     </facility>
@@ -280,7 +305,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>147</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>147</name>
     </facility>
@@ -291,7 +317,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>148</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>148</name>
     </facility>
@@ -302,7 +329,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>149</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>149</name>
     </facility>
@@ -313,7 +341,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>150</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>150</name>
     </facility>
@@ -324,7 +353,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>151</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>151</name>
     </facility>
@@ -335,7 +365,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>152</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>152</name>
     </facility>
@@ -346,7 +377,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>153</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>153</name>
     </facility>
@@ -357,7 +389,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>154</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>154</name>
     </facility>
@@ -368,7 +401,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>155</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>155</name>
     </facility>
@@ -379,7 +413,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>156</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>156</name>
     </facility>
@@ -390,7 +425,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>157</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>157</name>
     </facility>
@@ -401,7 +437,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>158</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>158</name>
     </facility>
@@ -412,7 +449,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>159</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>159</name>
     </facility>
@@ -423,7 +461,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>160</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>160</name>
     </facility>
@@ -434,7 +473,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>161</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>161</name>
     </facility>
@@ -445,7 +485,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>162</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>162</name>
     </facility>
@@ -456,7 +497,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>163</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>163</name>
     </facility>
@@ -467,7 +509,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>164</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>164</name>
     </facility>
@@ -478,7 +521,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>165</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>165</name>
     </facility>
@@ -489,7 +533,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>166</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>166</name>
     </facility>
@@ -500,7 +545,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>167</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>167</name>
     </facility>
@@ -511,7 +557,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>168</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>168</name>
     </facility>
@@ -522,7 +569,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>169</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>169</name>
     </facility>
@@ -533,7 +581,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>170</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>170</name>
     </facility>
@@ -544,7 +593,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>171</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>171</name>
     </facility>
@@ -555,7 +605,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>172</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>172</name>
     </facility>
@@ -566,7 +617,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>173</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>173</name>
     </facility>
@@ -577,7 +629,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>174</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>174</name>
     </facility>
@@ -588,7 +641,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>175</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>175</name>
     </facility>
@@ -599,7 +653,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>176</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>176</name>
     </facility>
@@ -610,7 +665,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>177</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>177</name>
     </facility>
@@ -621,7 +677,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>178</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>178</name>
     </facility>
@@ -632,7 +689,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>179</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>179</name>
     </facility>
@@ -643,7 +701,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>180</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>180</name>
     </facility>
@@ -654,7 +713,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>181</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>181</name>
     </facility>
@@ -665,7 +725,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>182</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>182</name>
     </facility>
@@ -676,7 +737,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>183</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>183</name>
     </facility>
@@ -687,7 +749,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>184</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>184</name>
     </facility>
@@ -698,7 +761,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>185</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>185</name>
     </facility>
@@ -709,7 +773,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>186</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>186</name>
     </facility>
@@ -720,7 +785,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>187</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>187</name>
     </facility>
@@ -731,7 +797,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>188</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>188</name>
     </facility>
@@ -742,7 +809,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>189</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>189</name>
     </facility>
@@ -753,7 +821,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>190</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>190</name>
     </facility>
@@ -764,7 +833,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>191</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>191</name>
     </facility>
@@ -775,7 +845,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>192</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>192</name>
     </facility>
@@ -786,7 +857,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>193</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>193</name>
     </facility>
@@ -797,7 +869,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>194</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>194</name>
     </facility>
@@ -808,7 +881,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>195</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>195</name>
     </facility>
@@ -819,7 +893,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>196</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>196</name>
     </facility>
@@ -830,7 +905,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>197</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>197</name>
     </facility>
@@ -841,7 +917,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>198</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>198</name>
     </facility>
@@ -852,7 +929,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>199</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>199</name>
     </facility>
@@ -863,7 +941,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>200</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>200</name>
     </facility>
@@ -874,7 +953,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>201</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>201</name>
     </facility>
@@ -885,7 +965,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>202</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>202</name>
     </facility>
@@ -896,7 +977,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>203</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>203</name>
     </facility>
@@ -907,7 +989,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>204</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>204</name>
     </facility>
@@ -918,7 +1001,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>205</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>205</name>
     </facility>
@@ -929,7 +1013,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>206</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>206</name>
     </facility>
@@ -940,7 +1025,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>207</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>207</name>
     </facility>
@@ -951,7 +1037,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>208</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>208</name>
     </facility>
@@ -962,7 +1049,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>209</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>209</name>
     </facility>
@@ -973,7 +1061,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>210</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>210</name>
     </facility>
@@ -984,7 +1073,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>211</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>211</name>
     </facility>
@@ -995,7 +1085,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>212</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>212</name>
     </facility>
@@ -1006,7 +1097,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>213</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>213</name>
     </facility>
@@ -1017,7 +1109,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>214</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>214</name>
     </facility>
@@ -1028,7 +1121,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>215</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>215</name>
     </facility>
@@ -1039,7 +1133,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>216</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>216</name>
     </facility>
@@ -1050,7 +1145,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>217</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>217</name>
     </facility>
@@ -1061,7 +1157,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>218</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>218</name>
     </facility>
@@ -1072,7 +1169,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>219</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>219</name>
     </facility>
@@ -1083,7 +1181,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>220</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>220</name>
     </facility>
@@ -1094,7 +1193,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>221</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>221</name>
     </facility>
@@ -1105,7 +1205,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>222</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>222</name>
     </facility>
@@ -1116,7 +1217,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>223</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>223</name>
     </facility>
@@ -1127,7 +1229,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>224</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>224</name>
     </facility>
@@ -1138,7 +1241,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>225</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>225</name>
     </facility>
@@ -1149,7 +1253,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>226</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>226</name>
     </facility>
@@ -1160,7 +1265,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>227</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>227</name>
     </facility>
@@ -1171,7 +1277,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>228</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>228</name>
     </facility>
@@ -1182,7 +1289,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>229</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>229</name>
     </facility>
@@ -1193,7 +1301,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>230</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>230</name>
     </facility>
@@ -1204,7 +1313,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>231</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>231</name>
     </facility>
@@ -1215,7 +1325,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>232</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>232</name>
     </facility>
@@ -1226,7 +1337,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>233</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>233</name>
     </facility>
@@ -1237,7 +1349,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>234</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>234</name>
     </facility>
@@ -1248,7 +1361,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>235</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>235</name>
     </facility>
@@ -1259,7 +1373,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>236</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>236</name>
     </facility>
@@ -1270,7 +1385,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>237</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>237</name>
     </facility>
@@ -1281,7 +1397,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>238</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>238</name>
     </facility>
@@ -1292,7 +1409,8 @@
             <outcommod>fuel</outcommod>
             <reactor_id>239</reactor_id>
             <db_path>/home/teddy/github/udb_reactor/db/1yr.sqlite</db_path>
-                      </udb_reactor>
+            <recipe_name>used_fuel_recipe</recipe_name>
+          </udb_reactor>
         </config>
         <name>239</name>
     </facility>

@@ -1,0 +1,65 @@
+<root>
+<recipe>
+	<name>used_fuel_recipe</name>
+	<basis>mass</basis>
+		<nuclide> <id>Ag-110m</id> <comp>0.000038</comp> </nuclide>
+		<nuclide> <id>Am-241</id> <comp>0.014763</comp> </nuclide>
+		<nuclide> <id>Cf-249</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Ce-144</id> <comp>0.013158</comp> </nuclide>
+		<nuclide> <id>C-14</id> <comp>0.000010</comp> </nuclide>
+		<nuclide> <id>Ac-227</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Ag-108m</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Am-243</id> <comp>0.015069</comp> </nuclide>
+		<nuclide> <id>Am-242m</id> <comp>0.000105</comp> </nuclide>
+		<nuclide> <id>Y-90</id> <comp>0.000013</comp> </nuclide>
+		<nuclide> <id>Zr-93</id> <comp>0.083732</comp> </nuclide>
+		<nuclide> <id>U-238</id> <comp>93.542046</comp> </nuclide>
+		<nuclide> <id>Zr-95</id> <comp>0.000131</comp> </nuclide>
+		<nuclide> <id>U-235</id> <comp>0.962502</comp> </nuclide>
+		<nuclide> <id>U-236</id> <comp>0.421881</comp> </nuclide>
+		<nuclide> <id>Th-229</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Th-230</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Se-79</id> <comp>0.000500</comp> </nuclide>
+		<nuclide> <id>Sm-151</id> <comp>0.001541</comp> </nuclide>
+		<nuclide> <id>Sn-126</id> <comp>0.002372</comp> </nuclide>
+		<nuclide> <id>Th-232</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>U-232</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>U-234</id> <comp>0.016382</comp> </nuclide>
+		<nuclide> <id>U-233</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Tc-99</id> <comp>0.084914</comp> </nuclide>
+		<nuclide> <id>Sr-90</id> <comp>0.053196</comp> </nuclide>
+		<nuclide> <id>Ru-103</id> <comp>0.000008</comp> </nuclide>
+		<nuclide> <id>Ru-106</id> <comp>0.008967</comp> </nuclide>
+		<nuclide> <id>Sb-124</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Sb-125</id> <comp>0.000998</comp> </nuclide>
+		<nuclide> <id>Cs-135</id> <comp>0.047097</comp> </nuclide>
+		<nuclide> <id>Cs-134</id> <comp>0.010681</comp> </nuclide>
+		<nuclide> <id>Cm-245</id> <comp>0.000420</comp> </nuclide>
+		<nuclide> <id>Cm-246</id> <comp>0.000034</comp> </nuclide>
+		<nuclide> <id>Cs-137</id> <comp>0.128284</comp> </nuclide>
+		<nuclide> <id>Eu-152</id> <comp>0.000002</comp> </nuclide>
+		<nuclide> <id>Eu-154</id> <comp>0.003012</comp> </nuclide>
+		<nuclide> <id>H-3</id> <comp>0.000006</comp> </nuclide>
+		<nuclide> <id>Eu-155</id> <comp>0.000822</comp> </nuclide>
+		<nuclide> <id>Cm-248</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Cm-247</id> <comp>0.000001</comp> </nuclide>
+		<nuclide> <id>Cf-251</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Cm-242</id> <comp>0.000451</comp> </nuclide>
+		<nuclide> <id>Cm-244</id> <comp>0.005627</comp> </nuclide>
+		<nuclide> <id>Cm-243</id> <comp>0.000054</comp> </nuclide>
+		<nuclide> <id>Pu-239</id> <comp>0.733909</comp> </nuclide>
+		<nuclide> <id>Pu-240</id> <comp>0.259848</comp> </nuclide>
+		<nuclide> <id>Pa-231</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Np-237</id> <comp>0.053573</comp> </nuclide>
+		<nuclide> <id>Pu-242</id> <comp>0.058228</comp> </nuclide>
+		<nuclide> <id>Pu-241</id> <comp>0.169318</comp> </nuclide>
+		<nuclide> <id>Pu-244</id> <comp>0.000005</comp> </nuclide>
+		<nuclide> <id>Ra-226</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Pm-147</id> <comp>0.014257</comp> </nuclide>
+		<nuclide> <id>Pd-107</id> <comp>0.026393</comp> </nuclide>
+		<nuclide> <id>Pu-238</id> <comp>0.022813</comp> </nuclide>
+		<nuclide> <id>Kr-85</id> <comp>0.002891</comp> </nuclide>
+		<nuclide> <id>I-129</id> <comp>0.017710</comp> </nuclide>
+		<nuclide> <id>Nb-94</id> <comp>0.000000</comp> </nuclide>
+		<nuclide> <id>Nb-95</id> <comp>0.000154</comp> </nuclide>
+</recipe></root>
