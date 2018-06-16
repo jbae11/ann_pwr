@@ -1,0 +1,111 @@
+
+<simulation xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <archetypes>
+    <spec>
+      <lib>agents</lib>
+      <name>NullRegion</name>
+    </spec>
+    <spec>
+      <lib>agents</lib>
+      <name>NullInst</name>
+    </spec>
+    <spec>
+      <lib>cycamore</lib>
+      <name>Sink</name>
+    </spec>
+    <spec>
+      <lib>cycamore</lib>
+      <name>DeployInst</name>
+    </spec>
+    <spec>
+      <lib>cycamore</lib>
+      <name>Storage</name>
+    </spec>
+    <spec>
+      <lib>udb_reactor.udb_reactor</lib>
+      <name>udb_reactor</name>
+    </spec>
+  </archetypes>
+
+  <control>
+    <!-- 2020/07 - 1969/01 -->
+    <duration>619</duration>
+    <startmonth>1</startmonth>
+    <startyear>1969</startyear>
+    <decay>lazy</decay>
+  </control>
+
+
+
+
+  <xi:include href="./archetype.xml" xpointer="xpointer(/root/facility)"/>
+
+    <facility>
+        <name>storage</name>
+        <config>
+            <Storage>
+                <in_commods>
+                    <val>fuel</val>
+                </in_commods>
+                <out_commods>
+                    <val>fuel_decayed</val>
+                </out_commods>
+            </Storage>
+        </config>
+    </facility>
+
+
+    <facility>
+        <name>sink</name>
+        <config>
+            <Sink>
+                <in_commods>
+                    <val>fuel_decayed</val>
+                </in_commods>
+                <capacity>1e299</capacity>
+            </Sink>
+        </config>
+    </facility>
+
+
+
+<region>
+    <name>SingleRegion</name>
+    <config><NullRegion/></config>
+    <institution>
+      <name>udb_reactor_inst</name>
+      <initialfacilitylist>
+      <entry>
+        <prototype>storage</prototype>
+        <number>1</number>
+      </entry>
+
+      <xi:include href="./prototype.xml" xpointer="xpointer(/root/entry)"/>
+      </initialfacilitylist>
+      <config>
+      <NullInst/>
+      </config>
+    </institution>
+     <institution>
+            <name>fac</name>
+            <config>
+                <DeployInst>
+                    <prototypes>
+                        <val>sink</val>
+                    </prototypes>
+                    <build_times>
+                        <val>617</val>
+                    </build_times>
+                    <n_build>
+                        <val>1</val>
+                   </n_build>
+                    <lifetimes>
+                        <val>9999</val>
+                    </lifetimes>
+                </DeployInst>
+            </config>
+        </institution>
+  </region>
+
+            </simulation>
