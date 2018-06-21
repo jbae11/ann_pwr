@@ -52,13 +52,14 @@ class udb_reactor(Facility):
         conn = lite.connect(self.db_path)
         conn.row_factory = lite.Row
         self.cur = conn.cursor()
-        assembly_ids = self.cur.execute('SELECT assembly_id, evaluation_date, '
+        assembly_ids = self.cur.execute('SELECT evaluation_date, isotope, '
                                         'sum(total_mass_g) FROM discharge '
-                                        'WHERE reactor_id = %i GROUP BY assembly_id' %self.reactor_id).fetchall()
+                                        'WHERE reactor_id = %i GROUP BY evaluation_date, isotope' %self.reactor_id).fetchall()
         self.assembly_discharge_dict = {}
+        print('WEEEEEEEEEEEEEEEEEE')
         for assembly in assembly_ids:
-            self.assembly_discharge_dict[assembly['assembly_id']] = [assembly['evaluation_date'],
-                                                                     assembly['sum(total_mass_g)'] / 1e3]
+            # lump everything to evaluation date
+            self.assembly_discharge_dict[assembly['evaluation_date']] = {assembly['isotope']: float(assembly['sum(total_mass_g)']) * 1e-3}
         # can't find a way to get it from framework
         self.startyear = 1969
         self.startmonth = 1
@@ -67,17 +68,14 @@ class udb_reactor(Facility):
         year_month = self.find_year_month()
         for key, val in self.assembly_discharge_dict.items():
             # [:-3] gets rid of the day
-            if val[0][:-3] == year_month:
-                total_mass = val[1]
+            if key[:-3] == year_month:
+                total_mass = sum(val.values())
                 if self.recipe_name != '':
                     composition = self.context.get_recipe(self.recipe_name)
                 else:
                     composition = {}
-                    discharged = self.cur.execute('SELECT isotope, '
-                                                  'total_mass_g FROM discharge WHERE '
-                                                  'assembly_id = %i' %key).fetchall()
-                    for row in discharged:
-                        composition[row['isotope'].capitalize()] = float(row['total_mass_g'])
+                    for iso, mass in val.items():
+                        composition[iso.capitalze()] = mass
                 material = ts.Material.create(self, total_mass, composition)
                 self.inventory.push(material)
 
