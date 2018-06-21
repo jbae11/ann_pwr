@@ -52,14 +52,17 @@ class udb_reactor(Facility):
         conn = lite.connect(self.db_path)
         conn.row_factory = lite.Row
         self.cur = conn.cursor()
+        self.assembly_discharge_dict = {}
+        make_keys = self.cur.execute('SELECT distinct(evaluation_date) FROM discharge '
+                                     'WHERE reactor_id = %i' %self.reactor_id).fetchall()
+        for row in make_keys:
+            self.assembly_discharge_dict[row['evaluation_date']] = {}
         assembly_ids = self.cur.execute('SELECT evaluation_date, isotope, '
                                         'sum(total_mass_g) FROM discharge '
                                         'WHERE reactor_id = %i GROUP BY evaluation_date, isotope' %self.reactor_id).fetchall()
-        self.assembly_discharge_dict = {}
-        print('WEEEEEEEEEEEEEEEEEE')
         for assembly in assembly_ids:
             # lump everything to evaluation date
-            self.assembly_discharge_dict[assembly['evaluation_date']] = {assembly['isotope']: float(assembly['sum(total_mass_g)']) * 1e-3}
+            self.assembly_discharge_dict[assembly['evaluation_date']][assembly['isotope']] = float(assembly['sum(total_mass_g)']) * 1e-3
         # can't find a way to get it from framework
         self.startyear = 1969
         self.startmonth = 1
@@ -67,7 +70,6 @@ class udb_reactor(Facility):
     def tick(self):
         year_month = self.find_year_month()
         for key, val in self.assembly_discharge_dict.items():
-            # [:-3] gets rid of the day
             if key[:-3] == year_month:
                 total_mass = sum(val.values())
                 if self.recipe_name != '':
@@ -75,10 +77,9 @@ class udb_reactor(Facility):
                 else:
                     composition = {}
                     for iso, mass in val.items():
-                        composition[iso.capitalze()] = mass
+                        composition[iso.capitalize()] = mass
                 material = ts.Material.create(self, total_mass, composition)
                 self.inventory.push(material)
-
 
     def get_material_bids(self, requests):
         """ Gets material bids that want its `outcommod' an
