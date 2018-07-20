@@ -47,55 +47,42 @@ class saltproc_reactor(Facility):
         tooltip="Absolute path to the hdf5 file"
     )
 
+    waste_tank = ts.ResBufMaterialInv()
+    fill_tank = ts.ResBufMaterialInv()
+    fissile_tank = ts.ResBufMaterialInv()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def write(self, string):
-        # for debugging purposes.
-        with open('log.txt', 'a+') as f:
-            f.write(string + '\n')
-
     def enter_notify(self):
         super().enter_notify()
         self.f = h5py.File(self.db_path, 'r')
-        dt = self.context.dt
+        # subject to change
+        self.waste_db = self.f['waste tank composition']
+        self.fissile_db = self.f['fissile tank composition']
+        self.isos = self.f['iso names']
+        self.num_isotopes = len(self.isos)
+        self.prev_indx = 0
         # default in saltproc is 3 days
         # probably should have this in the database as well
-        saltproc_timestep = 3 * 24 * 3600
-        
+        ################################ SET AS 60 days
+        self.saltproc_timestep = 3 * 24 * 3600 * 20
 
     def tick(self):
-        z = 2
-
-    def get_material_bids(self, requests):
-        """ Gets material bids that want its `outcommod' an
-            returns bid portfolio
-        """
-        if self.outcommod not in requests:
-            return
-        reqs = requests[self.outcommod]
-        bids = []
-        for req in reqs:
-            qty = min(req.target.quantity, self.inventory.quantity)
-            # returns if the inventory is empty
-            if self.inventory.empty():
-                return
-            # get the composition of the material next in line
-            next_in_line = self.inventory.peek()
-            mat = ts.Material.create_untracked(qty, next_in_line.comp())
-            bids.append({'request': req, 'offer': mat})
-        port = {"bids": bids}
-        return port
-
-
-    def get_material_trades(self, trades):
-        responses = {}
-        for trade in trades:
-            mat_list = self.inventory.pop_n(self.inventory.count)
-            # absorb all materials
-            # best way is to do it separately, but idk how to do it :(
-            for mat in mat_list[1:]:
-                mat_list[0].absorb(mat)
-            responses[trade] = mat_list[0]
-        return responses
+        print('TIME IS %i \n' %self.context.time)
+        self.indx = self.context.dt * (self.context.time - self.enter_time)
+        self.indx = int(self.indx / self.saltproc_timestep)
+        waste_dump = np.zeros(self.num_isotopes)
+        waste_dict = {}
+        for t in np.arange(self.prev_indx, self.indx):
+            print(t)
+            waste_dump += self.waste_db[t, :]
+        for i, val in enumerate(waste_dump):
+            iso = self.isos[i].decode('utf8')
+            waste_dict[iso] = val
+        print(waste_dict)
+        self.prev_indx = self.indx
+        total_mass = 1
+        material = ts.Material.create(self, total_mass, waste_dict)
+        self.waste_tank.push(material)
+        print('tick end')

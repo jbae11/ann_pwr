@@ -20,7 +20,7 @@
   </archetypes>
 
   <control>
-    <duration>619</duration>
+    <duration>20</duration>
     <startmonth>1</startmonth>
     <startyear>1969</startyear>
     <decay>manual</decay>
@@ -34,7 +34,7 @@
         <fill_commod>th</fill_commod>
         <fissile_out_commod>msr_pu</fissile_out_commod>
         <waste_commod>msr_waste</waste_commod>
-        <db_path>/home/teddy/github/saltproc-cyclus/db/40.hdf5</db_path>
+        <db_path>/home/teddy/github/saltproc_reactor/db/db_saltproc.hdf5</db_path>
       </saltproc_reactor>
     </config>
     <name>udb_reactor</name>
@@ -49,6 +49,8 @@
       </Sink>
     </config>
   </facility>
+
+  
 
 
 <region>
