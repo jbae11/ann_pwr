@@ -72,8 +72,8 @@ class saltproc_reactor(Facility):
         self.fissile_db = self.f['fissile tank composition']
         self.driver_refill = self.f['driver refill tank composition']
         self.blanket_refill = self.f['blanket refill tank composition']
-        self.end_driver = self.f['driver composition after reproc'][-1, :]
-        self.end_blanket = self.f['blanket composition after reproc'][-1, :]
+        self.driver_db = self.f['driver composition after reproc']
+        self.blanket_db = self.f['blanket composition after reproc']
         self.isos = self.f['iso names']
         self.num_isotopes = len(self.isos)
         self.prev_indx = 0
@@ -87,6 +87,7 @@ class saltproc_reactor(Facility):
         self.blanket_buf.capacity = self.blanket_mass
         self.fresh = True
         self.loaded = False
+        self.shutdown = False
 
     def tick(self):
         print('TIME IS %i' %self.context.time)
@@ -224,6 +225,7 @@ class saltproc_reactor(Facility):
             bids.append({'request': req, 'offer':mat})
 
         if self.context.time == self.exit_time:
+            self.shutdown = True
             reqs = requests[self.final_fuel_commod]
             for req in reqs:
                 total_qty = self.driver_buf.quantity + self.blanket_buf.quantity
@@ -250,8 +252,8 @@ class saltproc_reactor(Facility):
             if commodity == self.fissile_out_commod:
                 mat_list = self.fissile_tank.pop_n(self.fissile_tank.count)
             if commodity == self.final_fuel_commod:
-                blank_comp = self.array_to_comp_dict(self.end_blanket)
-                driver_comp = self.array_to_comp_dict(self.end_driver)
+                blank_comp = self.array_to_comp_dict(self.blanket_db[self.prev_indx, :])
+                driver_comp = self.array_to_comp_dict(self.driver_db[self.prev_indx, :])
                 blank = ts.Material.create(self, self.blanket_mass, blank_comp)
                 driv = ts.Material.create(self, self.driver_mass, driver_comp)
                 driv.absorb(blank)
@@ -266,6 +268,8 @@ class saltproc_reactor(Facility):
 
     def get_material_requests(self):
         """ Ask for material fill_commod """
+        if self.shutdown:
+            return {}
         if not self.loaded:
             driver_recipe = {'92235': 1}
             d_qty = self.driver_buf.capacity - self.driver_buf.quantity
