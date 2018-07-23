@@ -30,12 +30,6 @@ class saltproc_reactor(Facility):
         uilabel="Fill Commodity"
     )
 
-    fill_recipe = ts.String(
-        doc="The recipe this facility will take in for fertile materials ",
-        tooltip="Fill Recipe",
-        uilabel="Fill Recipe"
-    )
-
     fissile_out_commod = ts.String(
         doc="The fissile commodity this facility will output",
         tooltip="Fissile commodity",
@@ -54,8 +48,12 @@ class saltproc_reactor(Facility):
     )
 
     waste_tank = ts.ResBufMaterialInv()
-    fill_tank = ts.ResBufMaterialInv()
     fissile_tank = ts.ResBufMaterialInv()
+
+    driver_buf = ts.ResBufMaterialInv()
+    blanket_buf = ts.ResBufMaterialInv()
+
+    fill_tank = ts.ResBufMaterialInv()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -77,22 +75,51 @@ class saltproc_reactor(Facility):
         self.saltproc_timestep = 3 * 24 * 3600 * 10
         self.driver_mass = 1
         self.blanket_mass = 1
+        self.driver_buf.capacity = self.driver_mass
+        self.blanket_buf.capacity = self.blanket_mass
+        self.fresh = True
+        self.loaded = False
 
     def tick(self):
         print('TIME IS %i' %self.context.time)
-        self.indx = self.context.dt * (self.context.time - self.enter_time)
-        self.indx = int(self.indx / self.saltproc_timestep)
-        self.indx = min(self.indx, len(self.waste_db[:, 0])) + 1
-        print('INDX IS: %i' %self.indx)
-        # push waste from db to waste_tank
-        self.get_waste()
-        # push fissile from db to fissile_tank
-        self.get_fissile()
+        if not self.fresh:
+            self.indx = self.context.dt * (self.context.time - self.start_time)
+            self.indx = int(self.indx / self.saltproc_timestep)
+            self.indx = min(self.indx, len(self.waste_db[:, 0])) + 1
+            print('INDX IS: %i' %self.indx)
+        else:
+            self.indx = -1
+        # if reactor is `on'
+        if self.indx > 0:
+            # push waste from db to waste_tank
+            self.get_waste()
+            # push fissile from db to fissile_tank
+            self.get_fissile()
 
-        self.get_fill_demand()
-        self.prev_indx = self.indx
+            self.get_fill_demand()
+            self.prev_indx = self.indx
+
+        print('DRIVER QTY')
+        print(self.driver_buf.quantity)
         
+        print('BLANKET QTY')
+        print(self.blanket_buf.quantity)
+
+
     def tock(self):
+
+        # check if core is full;
+        if (self.driver_buf.quantity == self.driver_buf.capacity and
+            self.blanket_buf.quantity == self.blanket_buf.capacity):
+            self.loaded = True
+            print('REACTOR IS LOADED')
+            if self.fresh:
+                self.start_time = self.context.time
+                self.fresh = False
+        else:
+            print('DRIVER OR BLANKET IS NOT FULL IN TIME %s \n\n' %self.context.time)
+            self.loaded = False
+
         print('TOCK\n')
 
     def get_waste(self):
@@ -133,25 +160,29 @@ class saltproc_reactor(Facility):
         self.get_fill = False
         blanket_demand_dump = np.zeros(self.num_isotopes)
         driver_demand_dump = np.zeros(self.num_isotopes)
-        fill_dict = {}
+        fill_comp_dict = {}
+        # since the data is in negative:
         for t in np.arange(self.prev_indx, self.indx):
-            driver_demand_dump += self.driver_refill[t, :]
-            blanket_demand_dump += self.blanket_refill[t, :]
-        # since the data is in negative:      
-        driver_fill_mass = -1.0 * self.driver_mass * sum(driver_demand_dump)
-        blanket_fill_mass = -1.0 * self.blanket_mass * sum(blanket_demand_dump)
+            driver_demand_dump += -1.0 * self.driver_refill[t, :]
+            blanket_demand_dump += -1.0 * self.blanket_refill[t, :]
+        driver_fill_mass = self.driver_mass * sum(driver_demand_dump)
+        blanket_fill_mass = self.blanket_mass * sum(blanket_demand_dump)
+
+        # pop mass to make room
+        self.driver_buf.pop(driver_fill_mass)
+        self.blanket_buf.pop(blanket_fill_mass)
+
         self.qty = driver_fill_mass + blanket_fill_mass
         if (self.qty) == 0:
             return 0 
-        self.total_fill_demand = -1.0 * (driver_demand_dump + blanket_demand_dump) 
-        for i, val in enumerate(self.total_fill_demand):
+        self.fill_comp = driver_demand_dump + blanket_demand_dump 
+        for i, val in enumerate(self.fill_comp):
             if val != 0:
                 iso = self.isos[i].decode('utf8')
-                fill_dict[iso] = val
-        if bool(fill_dict):
-            print('I WANT %f kg DEP U' %(driver_fill_mass+blanket_fill_mass))
-            self.demand_mat = ts.Material.create(self, driver_fill_mass + blanket_fill_mass,
-                                            fill_dict)
+                fill_comp_dict[iso] = val
+        if bool(fill_comp_dict):
+            print('I WANT %f kg DEP U' %(self.qty))
+            self.demand_mat = ts.Material.create_untracked(self.qty, fill_comp_dict)
         if self.qty != 0.0:
             self.get_fill = True
 
@@ -212,18 +243,32 @@ class saltproc_reactor(Facility):
 
     def get_material_requests(self):
         """ Ask for material fill_commod """
-        print(self.get_fill)
-        if self.get_fill:
-            fill_qty = self.qty
-            recipe = self.context.get_recipe(self.fill_recipe)
-            target = ts.Material.create_untracked(fill_qty, recipe)
-            commods = {self.fill_commod: target}
-            port = {'commodities': commods, 'constraints': fill_qty}
+        if not self.loaded:
+            driver_recipe = {'92235': 1}
+            d_qty = self.driver_buf.capacity - self.driver_buf.quantity
+            driver_mat = ts.Material.create_untracked(d_qty, driver_recipe)
+
+            blanket_recipe = {'92238': 1}
+            b_qty = self.blanket_buf.capacity - self.blanket_buf.quantity
+            blanket_mat = ts.Material.create_untracked(b_qty, blanket_recipe)
+
+            ports = [{'commodities': {self.init_fuel_commod: driver_mat}, 'constraints': d_qty},
+                     {'commodities': {self.fill_commod: blanket_mat}, 'constraints': b_qty}]
+            return ports
+        elif self.get_fill:
+            print('GIMMMMME FILLLLL \n\n\n')
+            commods = {self.fill_commod: self.demand_mat}
+            port = {'commodities': commods, 'constraints': self.qty}
             return port
         else:
             return {}
 
     def accept_material_trades(self, responses):
         """ Get fill_commod and store it into fill_tank """
-        for mat in responses.values():
-            self.fill_tank.push(mat)
+        for key, mat in responses.items():
+            if key.request.commodity == self.init_fuel_commod and not self.loaded:
+                self.driver_buf.push(mat)
+            elif key.request.commodity == self.fill_commod:
+                to_blanket = mat.extract_qty(self.blanket_buf.space)
+                self.blanket_buf.push(to_blanket)
+                self.driver_buf.push(mat)
