@@ -18,6 +18,12 @@ class saltproc_reactor(Facility):
         uilabel="Init Fuel"
     )
 
+    final_fuel_commod = ts.String(
+        doc="The commodity name for final discharge fuel",
+        tooltip="Final Fuel",
+        uilabel="Final Fuel"
+    )
+
     core_size = ts.Float(
         doc="Mass of core in reactor",
         tooltip="Core Size",
@@ -66,6 +72,8 @@ class saltproc_reactor(Facility):
         self.fissile_db = self.f['fissile tank composition']
         self.driver_refill = self.f['driver refill tank composition']
         self.blanket_refill = self.f['blanket refill tank composition']
+        self.end_driver = self.f['driver composition after reproc'][-1, :]
+        self.end_blanket = self.f['blanket composition after reproc'][-1, :]
         self.isos = self.f['iso names']
         self.num_isotopes = len(self.isos)
         self.prev_indx = 0
@@ -130,10 +138,8 @@ class saltproc_reactor(Facility):
         for t in np.arange(self.prev_indx, self.indx):
             waste_dump += self.waste_db[t, :]
         # convert this into a dictionary
-        for i, val in enumerate(waste_dump):
-            if val != 0:
-                iso = self.isos[i].decode('utf8')
-                waste_dict[iso] = val
+
+        waste_dict = self.array_to_comp_dict(waste_dump)
         if bool(waste_dict):
             waste_mass = self.driver_mass * sum(waste_dict.values())
             material = ts.Material.create(self, waste_mass, waste_dict)
@@ -146,15 +152,15 @@ class saltproc_reactor(Facility):
 
         for t in np.arange(self.prev_indx, self.indx):
             fissile_dump += self.fissile_db[t, :]
-        for i, val in enumerate(fissile_dump):
-            if val != 0:
-                iso = self.isos[i].decode('utf8')
-                fissile_dict[iso] = val
+
+        fissile_dict = self.array_to_comp_dict(fissile_dump)
+
         if bool(fissile_dict):
             fissile_mass = self.blanket_mass * sum(fissile_dict.values())
             material = ts.Material.create(self, fissile_mass, fissile_dict)
             self.fissile_tank.push(material)
             print('PUSHED %f kg of FISSILE MATERIAL INTO FISSILE TANK' %fissile_mass)
+
 
     def get_fill_demand(self):
         self.get_fill = False
@@ -176,17 +182,16 @@ class saltproc_reactor(Facility):
         if (self.qty) == 0:
             return 0 
         self.fill_comp = driver_demand_dump + blanket_demand_dump 
-        for i, val in enumerate(self.fill_comp):
-            if val != 0:
-                iso = self.isos[i].decode('utf8')
-                fill_comp_dict[iso] = val
+        
+        fill_comp_dict = self.array_to_comp_dict(self.fill_comp)
+
         if bool(fill_comp_dict):
             print('I WANT %f kg DEP U' %(self.qty))
             self.demand_mat = ts.Material.create_untracked(self.qty, fill_comp_dict)
         if self.qty != 0.0:
             self.get_fill = True
 
-    
+
     def get_material_bids(self, requests):
         """ Gets material bids that want its `outcommod' an
             returns bid portfolio
@@ -218,6 +223,17 @@ class saltproc_reactor(Facility):
             mat = ts.Material.create_untracked(qty, next_in_line.comp())
             bids.append({'request': req, 'offer':mat})
 
+        if self.context.time == self.exit_time:
+            reqs = requests[self.final_fuel_commod]
+            for req in reqs:
+                total_qty = self.driver_buf.quantity + self.blanket_buf.quantity
+                qty = min(req.target.quantity, total_qty)
+                if self.driver_buf.empty():
+                    return
+                driver = self.driver_buf.peek()
+                blanket = self.blanket_buf.peek()
+                driver.absorb(blanket)
+                bids.append({'request': req, 'offer': driver})                                
         port = {"bids": bids}
         return port
 
@@ -233,6 +249,13 @@ class saltproc_reactor(Facility):
                 mat_list = self.waste_tank.pop_n(self.waste_tank.count)
             if commodity == self.fissile_out_commod:
                 mat_list = self.fissile_tank.pop_n(self.fissile_tank.count)
+            if commodity == self.final_fuel_commod:
+                blank_comp = self.array_to_comp_dict(self.end_blanket)
+                driver_comp = self.array_to_comp_dict(self.end_driver)
+                blank = ts.Material.create(self, self.blanket_mass, blank_comp)
+                driv = ts.Material.create(self, self.driver_mass, driver_comp)
+                driv.absorb(blank)
+                mat_list = [driv]
             # absorb all materials
             # best way is to do it separately, but idk how to do it :(
             for mat in mat_list[1:]:
@@ -256,7 +279,6 @@ class saltproc_reactor(Facility):
                      {'commodities': {self.fill_commod: blanket_mat}, 'constraints': b_qty}]
             return ports
         elif self.get_fill:
-            print('GIMMMMME FILLLLL \n\n\n')
             commods = {self.fill_commod: self.demand_mat}
             port = {'commodities': commods, 'constraints': self.qty}
             return port
@@ -272,3 +294,12 @@ class saltproc_reactor(Facility):
                 to_blanket = mat.extract_qty(self.blanket_buf.space)
                 self.blanket_buf.push(to_blanket)
                 self.driver_buf.push(mat)
+
+
+    def array_to_comp_dict(self, array):
+        dictionary = {}
+        for i, val in enumerate(array):
+            if val != 0:
+                iso = self.isos[i].decode('utf8')
+                dictionary[iso] = val
+        return dictionary
