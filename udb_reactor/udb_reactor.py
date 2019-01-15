@@ -8,6 +8,7 @@ import pandas as pd
 from cyclus.agents import Institution, Agent, Facility
 from cyclus import lib
 import cyclus.typesystem as ts
+import pickle
 
 
 class udb_reactor(Facility):
@@ -45,8 +46,15 @@ class udb_reactor(Facility):
         tooltip="Simulation Startmonth"
     )
 
+    use_rom = ts.Bool(
+        doc="Boolean to use reduced-order-model for depletion"
+        tooltip="ROM bool"
+        default=0
+    )
+
     inventory = ts.ResBufMaterialInv()
 
+    ## Import pickle file into `depletion_model_dict'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,16 +77,18 @@ class udb_reactor(Facility):
         year_month = self.find_year_month()
         if year_month in self.assembly_dates:
             assembly_id_list = self.reactor_assems.loc[self.reactor_assems['discharge_date'] == year_month]['assembly_id'].unique()
+
             for assembly in assembly_id_list:
-                assem_data = self.reactor_assems.loc[self.reactor_assems['assembly_id'] == assembly][['name', 'total_mass_g']]
-                assem_data['comp'] = assem_data['total_mass_g'] / sum(assem_data['total_mass_g'])
-                composition = {}
-                for indx, row in assem_data.iterrows():
-                    composition[row['name']] = row['comp']
-                tot_mass = sum(assem_data['total_mass_g']) * 1e-3
+                assem_mass = np.array(
+                    self.reactor_assems.loc[self.reactor_assems['assembly_id'] == assembly_id]['initial_uranium_kg'])[0]
                 if self.recipe_name != '':
                     composition = self.context.get_recipe(self.recipe_name)
-                material = ts.Material.create(self, tot_mass, composition)
+                elif use_rom:
+                    composition = self.rom_depletion(assembly)
+                else:
+                    composition = self.data_depletion(assembly)
+
+                material = ts.Material.create(self, assem_mass, composition)
                 self.inventory.push(material)
 
 
@@ -122,3 +132,20 @@ class udb_reactor(Facility):
             return (str(year) + '-0' + str(month))
         else:
             return (str(year) + '-' + str(month))
+
+    def rom_depletion(self, assembly_id):
+        enr_bu = self.reactor_assems.loc[self.reactor_assems['assembly_id'] == assembly_id][[
+            'initial_enrichment', 'discharge_burnup']]
+        enr_bu = np.array(enr_bu)[0]
+        
+        composition = {}
+        for iso, model in self.depletion_model_dict.items():
+            composition[iso] = model.predict(enr_bu)[0]
+
+    def data_depletion(self, assembly_id):
+        assem_data = self.reactor_assems.loc[self.reactor_assems['assembly_id'] == assembly_id][['name', 'total_mass_g']]
+        assem_data['comp'] = assem_data['total_mass_g'] / sum(assem_data['total_mass_g'])
+        composition = {}
+        for indx, row in assem_data.iterrows():
+            composition[row['name']] = row['comp']
+        return composition
