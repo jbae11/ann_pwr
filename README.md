@@ -19,6 +19,20 @@ accordingly.
 This module requires a pickled file with the trained
 ann model.
 
+## Inputs:
+- fuel_incommod: commodity name for incoming fuel
+- fuel_outcommod: commodity name for outgoing fuel
+- pickle_path: absolute path of the pickle file
+    - *pickle file format is a dictionary with keys:*
+        - *model, xscaler, yscaler, iso_list*
+- n_batch: number of batches for reactor
+- burnup_list: list of burnup values, starting from first batch to equilibrium. Length must match `n_batch`
+- enrichment_list: list of enrichment values, starting from first batch to equilibrium. Length must match `n_batch`
+- batch_mass: fuel mass per batch in kg
+- power_cap: power produced by reactor when operational (units arbitrary)
+- cycle_time: operational cycle time of reactor,
+- refuel_time: time for reactor to refuel, reactor is not operational during this time.
+
 ## Dependencies:
 - keras
 - numpy
