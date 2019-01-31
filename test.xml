@@ -24,7 +24,7 @@
   </archetypes>
 
   <control>
-    <duration>100</duration>
+    <duration>40</duration>
     <startmonth>1</startmonth>
     <startyear>2000</startyear>
     <decay>manual</decay>
@@ -36,9 +36,9 @@
         <fuel_incommod>fuel</fuel_incommod>
         <fuel_outcommod>unf</fuel_outcommod>
         <burnup_list>
-            <val>20</val>
-            <val>40</val>
-            <val>60</val>
+            <val>20.0</val>
+            <val>40.0</val>
+            <val>60.0</val>
         </burnup_list>
         <enrichment_list>
             <val>2.0</val>
@@ -50,7 +50,7 @@
         <power_cap>1000</power_cap>
         <cycle_time>18</cycle_time>
         <refuel_time>1</refuel_time>
-        <pickle_path>/home/teddy/github/saltproc_reactor/db/ann_model.pkl</pickle_path>
+        <pickle_path>/home/teddy/github/ann_lwr/ann_model.pkl</pickle_path>
       </ann_lwr>
     </config>
     <name>ann_lwr</name>
