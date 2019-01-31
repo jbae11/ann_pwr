@@ -5,13 +5,13 @@ from collections import defaultdict
 import numpy as np
 import scipy as sp
 import h5py
-
+import pickle
 from cyclus.agents import Institution, Agent, Facility
 from cyclus import lib
 import cyclus.typesystem as ts
 
 
-class saltproc_reactor(Facility):
+class ann_lwr(Facility):
     init_fuel_commod = ts.String(
         doc="The commodity name for initial loading fuel",
         tooltip="Init Fuel",
@@ -48,9 +48,9 @@ class saltproc_reactor(Facility):
         uilabel="Waste Commodity"
     )
 
-    db_path = ts.String(
-        doc="Path to the hdf5 file",
-        tooltip="Absolute path to the hdf5 file"
+    pickle_path = ts.String(
+        doc="Path to the pickle file",
+        tooltip="Absolute path to the pickle file"
     )
 
     waste_tank = ts.ResBufMaterialInv()
@@ -66,6 +66,10 @@ class saltproc_reactor(Facility):
 
     def enter_notify(self):
         super().enter_notify()
+        self.model_dict = pickle.load(open(pickle_path, 'rb'))
+        
+
+
         self.f = h5py.File(self.db_path, 'r')
         # subject to change
         self.waste_db = self.f['waste tank composition']
@@ -130,6 +134,8 @@ class saltproc_reactor(Facility):
             self.loaded = False
 
         print('TOCK\n')
+
+
 
     def get_waste(self):
         waste_dump = np.zeros(self.num_isotopes)
@@ -307,3 +313,13 @@ class saltproc_reactor(Facility):
                 iso = self.isos[i].decode('utf8')
                 dictionary[iso] = val
         return dictionary
+
+    def predict(self, enr_bu):
+        model = self.model_dict['model']
+        x = self.model_dict['xscaler'].transform(enr_bu)
+        y = self.model_dict['yscaler'].inverse_transform(
+                model.predict(x))[0]
+        comp_dict = {}
+        for indx, iso in enumerate(iso_list):
+            comp_dict[iso] = y[indx]
+        return comp_dict
