@@ -1,23 +1,27 @@
-# UDB Reactor
+# ANN LWR
 
-This Cyclus Reactor module is created towards the project
-to benchmark Cyclus with ORION UNF-ST&DARDS benchmark.
+This Cyclus Reactor module is created to perform varying
+burnup and enrichment calculations for LWRs using a
+trained neural network model to predict UNF composition.
 
-The reactor module will read the UNF-ST&DARDS dataset
-and will output UNF defined by the database. The parameters
-for the output commodity are:
+The reactor module will behave similarly to the [Cycamore
+batch-recipe reactor](https://github.com/cyclus/cycamore),
+but it will deplete fuel with user-input burnup.
 
-1. Output date (finest time step is one month.)
-2. Composition
-3. Quantity
+This reactor can vary burnup for the first n-1 batches,
+where n is the total number of batches. The user can
+also request varying enrichment fuel for the first n-1 batches.
 
-Each reactor agent will have a `ReactorID` parameter
-that will connect the individual prototype with an
-actual reactor in the database. This way, we can model
-the historical UNF discharge by tracking
-individual reactors in the U.S as an agent.
+When decommissioning, the reactor will asses how long the
+fuel has been in the reactor and will reduce the burnup
+accordingly.
 
-**Placeholder**
-I'm guessing this will be different from ORION, and allow
-interesting analyses like the GIS mapping and burn-up
-characterization by reactor.
+This module requires a pickled file with the trained
+ann model.
+
+## Dependencies:
+- keras
+- numpy
+- cyclus
+- sklearn
+- pickle
