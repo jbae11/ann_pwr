@@ -31,7 +31,7 @@ class ann_lwr(Facility):
 
     burnup_list = ts.VectorDouble(
         doc="Burnup list for n batches",
-        tooltip="Bunrup list for n batches"
+        tooltip="Burnup list for n batches"
     )
 
     enrichment_list = ts.VectorDouble(
@@ -73,13 +73,14 @@ class ann_lwr(Facility):
 
     def enter_notify(self):
         super().enter_notify()
-        self.model_dict = pickle.load(open(pickle_path, 'rb'))
+        self.model_dict = pickle.load(open(self.pickle_path, 'rb'))
         # change other to h-1
         other_index = self.model_dict['iso_list'].index('other')
         self.model_dict['iso_list'][other_index] = 'h-1'
+        self.iso_list = self.model_dict['iso_list']
 
         # input consistency checking:
-        if len(self.burnup_list) != n_batch or len(self.enrichmnet_list) != n_batch:
+        if len(self.burnup_list) != self.n_batch or len(self.enrichment_list) != self.n_batch:
             raise ValueError('Burnup and Enrichment list length has to match n_batch')
 
         # set core capacity
@@ -87,35 +88,46 @@ class ann_lwr(Facility):
 
         self.cycle_step = 0
         self.batch_gen = 0
+        # if no exit time, exit time is 1e5
+        if self.exit_time == -1:
+            self.decom_time = 1e5
+        else:
+            self.decom_time = self.exit_time
 
     def tick(self):
+        print('tick')
+        print(self.context.time)
         # If time to decommission, where if decommissioning
         # mid cycle, deplete using weighted average
         # and discharge
-        if self.context.time == self.exit_time + 1:
+        if self.context.time == self.decom_time + 1:
             # burnup is prorated by the ratio
-            cycle_step_ratio = cycle_step / cycle_time
+            cycle_step_ratio = self.cycle_step / self.cycle_time
+            print('Gonna decommission')
             for bu in self.burnup_list:
-                prorate_bu = bu * cycle_step_ratio
+                prorated_bu = bu * cycle_step_ratio
                 self.transmute_and_discharge(self.batch_mass,
                                              prorated_bu)
             return
 
         if self.cycle_step == self.cycle_time:
-            if self.batch_gen < len(self.n_batch):
+            if self.batch_gen < self.n_batch:
                 bu = self.burnup_list[self.batch_gen]
             else:
                 bu = self.burnup_list[-1]
+            print('Discharge cycle')
             self.transmute_and_discharge(self.batch_mass,
                                          bu)
             self.batch_gen += 1
 
     def tock(self):
+        print('tock')
+        print(self.context.time)
         if (self.cycle_step >= self.cycle_time + self.refuel_time) and (self.is_core_full()):
             self.cycle_step = 0
 
         # produce power if core is full
-        if self.cycle_step >= 0 and self.cycle_step < self.cycle_time and self.is_core_full():
+        if (self.cycle_step >= 0) and (self.cycle_step < self.cycle_time) and (self.is_core_full()):
             self.produce_power(True)
         else:
             self.produce_power(False)
@@ -129,16 +141,19 @@ class ann_lwr(Facility):
         """ Gets material bids that want its 'outcommod' and
             returns bid portfolio
         """
+        print('Get material bids')
         bids = []
         try:
             reqs = requests[self.fuel_outcommod]
             for req in reqs:
-                qty = min(req.target.quantity, self.waste.quantity)
                 if self.waste.empty():
                     break
-                mat = ts.Material.create_untracked(qty, self.waste.peek().comp())
+                qty = min(req.target.quantity, self.waste.quantity)
+                next_in_line = self.waste.peek()
+                mat = ts.Material.create_untracked(qty, next_in_line.comp())
                 bids.append({'request': req, 'offer': mat})
-
+        except:
+            z = 1
         if len(bids) == 0:
             return
         port = {'bids': bids}
@@ -146,13 +161,13 @@ class ann_lwr(Facility):
 
     def get_material_trades(self, trades):
         """ Give out fuel_outcommod from waste buffer"""
+        print('Get material trades')
         responses = {}
         for trade in trades:
             commodity = trade.request.commodity
             if commodity == self.fuel_outcommod:
                 mat_list = self.waste.pop_n(self.waste.count)
-
-            if len(mat) > 1:
+            if len(mat_list) > 1:
                 for mat in mat_list[1:]:
                     mat_list[0].absorb(mat)
             responses[trade] = mat_list[0]
@@ -160,6 +175,7 @@ class ann_lwr(Facility):
 
     def get_material_requests(self):
         """ Ask for fuel_incommod"""
+        print('Get material requests')
         ports = []
         if self.is_core_full():
             return {}
@@ -173,9 +189,9 @@ class ann_lwr(Facility):
         qty = {}
         mat = {}
         for enrichment in enr_to_request:
-            comp = {'u-238': 100-enrichment
+            comp = {'u-238': 100-enrichment,
                     'u-235': enrichment}
-            qty = batch_mass
+            qty = self.batch_mass
             mat = ts.Material.create_untracked(qty, comp)
             ports.append({'commodities' : {self.fuel_incommod: mat},
                           'constraints': qty})
@@ -184,6 +200,7 @@ class ann_lwr(Facility):
 
     def accept_material_trades(self, responses):
         """ Get fuel_incommod and store it into core"""
+        print('Accept material trades')
         for key, mat in responses.items():
             if key.request.commodity == self.fuel_incommod:
                 self.core.push(mat)
@@ -197,10 +214,11 @@ class ann_lwr(Facility):
 
     def get_enrichment(self):
         """ Returns the average enrichment of fuel in core """
-        in_core_fuel = self.core.peek(self.core.quantity)
+
+        in_core_fuel = self.core.pop(self.core.quantity)
+        self.core.push(in_core_fuel)
         composition = in_core_fuel.comp()
-        print(composition)
-        return composition['U-235']
+        return composition[922350000]
 
 
     def predict(self, enr_bu):
@@ -209,18 +227,17 @@ class ann_lwr(Facility):
         y = self.model_dict['yscaler'].inverse_transform(
                 model.predict(x))[0]
         comp_dict = {}
-        for indx, iso in enumerate(iso_list):
+        for indx, iso in enumerate(self.iso_list):
             comp_dict[iso] = y[indx]
         return comp_dict
 
 
     def transmute_and_discharge(self, quantity, bu):
         # this should ideally be one batch,
-        # so not pop_qty but just pop
-        discharge_fuel = self.core.pop_qty(quantity)
+        discharge_fuel = self.core.pop(quantity)
         enr_bu = [[self.get_enrichment(), bu]]
         comp = self.predict(enr_bu)
-        discharge_fuel.comp() = comp
+        discharge_fuel.comp = comp
         self.waste.push(discharge_fuel)
 
     def produce_power(self, produce=True):
