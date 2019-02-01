@@ -53,6 +53,7 @@
         <pickle_path>/home/teddy/github/ann_lwr/ann_model.pkl</pickle_path>
       </ann_lwr>
     </config>
+    <lifetime>50</lifetime>
     <name>ann_lwr</name>
   </facility>
 
@@ -61,7 +62,6 @@
     <config>
       <Sink>
         <in_commods><val>unf</val></in_commods>
-        <capacity>1e100</capacity>
       </Sink>
     </config>
   </facility>

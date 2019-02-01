@@ -5,6 +5,7 @@ from collections import defaultdict
 import numpy as np
 import scipy as sp
 import h5py
+import cyclus
 import pickle
 from cyclus.agents import Institution, Agent, Facility
 from cyclus import lib
@@ -94,6 +95,10 @@ class ann_lwr(Facility):
         else:
             self.decom_time = self.exit_time
 
+    def decision(self):
+        print('Decision')
+        print(self.core.quantity)
+        print(self.waste.quantity)
 
     def tick(self):
         print('tick')
