@@ -94,20 +94,24 @@ class ann_lwr(Facility):
         else:
             self.decom_time = self.exit_time
 
+
     def tick(self):
         print('tick')
         print(self.context.time)
         # If time to decommission, where if decommissioning
         # mid cycle, deplete using weighted average
         # and discharge
-        if self.context.time == self.decom_time + 1:
+        if self.context.time == self.decom_time:
             # burnup is prorated by the ratio
             cycle_step_ratio = self.cycle_step / self.cycle_time
             print('Gonna decommission')
             for bu in self.burnup_list:
                 prorated_bu = bu * cycle_step_ratio
+                print('Prorated bu')
+                print(prorated_bu)
                 self.transmute_and_discharge(self.batch_mass,
                                              prorated_bu)
+            print('decom return')
             return
 
         if self.cycle_step == self.cycle_time:
@@ -119,6 +123,8 @@ class ann_lwr(Facility):
             self.transmute_and_discharge(self.batch_mass,
                                          bu)
             self.batch_gen += 1
+        
+        print('Tick end')
 
     def tock(self):
         print('tock')
@@ -134,6 +140,7 @@ class ann_lwr(Facility):
 
         if self.cycle_step > 0 or self.is_core_full():
             self.cycle_step += 1
+        print('Tock end')
 
 
 
@@ -143,20 +150,32 @@ class ann_lwr(Facility):
         """
         print('Get material bids')
         bids = []
+        print(self.core.capacity)
+        print(self.waste.capacity)
         try:
             reqs = requests[self.fuel_outcommod]
             for req in reqs:
                 if self.waste.empty():
                     break
-                qty = min(req.target.quantity, self.waste.quantity)
+                qty = min(req.target.quantity, self.waste.quantity
+                )
                 next_in_line = self.waste.peek()
+                print('qty')
+                print(qty)
+                print(next_in_line.comp())
                 mat = ts.Material.create_untracked(qty, next_in_line.comp())
                 bids.append({'request': req, 'offer': mat})
         except:
             z = 1
+        print('bids end')
         if len(bids) == 0:
             return
+        print('eh')
         port = {'bids': bids}
+        print('ehhh')
+        print(port)
+        print(self.core.quantity)
+        print(self.waste.quantity)
         return port
 
     def get_material_trades(self, trades):
@@ -177,6 +196,8 @@ class ann_lwr(Facility):
         """ Ask for fuel_incommod"""
         print('Get material requests')
         ports = []
+        if self.context.time == self.decom_time:
+            return ports
         if self.is_core_full():
             return {}
 
@@ -214,7 +235,6 @@ class ann_lwr(Facility):
 
     def get_enrichment(self):
         """ Returns the average enrichment of fuel in core """
-
         in_core_fuel = self.core.pop(self.core.quantity)
         self.core.push(in_core_fuel)
         composition = in_core_fuel.comp()
@@ -234,10 +254,13 @@ class ann_lwr(Facility):
 
     def transmute_and_discharge(self, quantity, bu):
         # this should ideally be one batch,
-        discharge_fuel = self.core.pop(quantity)
         enr_bu = [[self.get_enrichment(), bu]]
+        discharge_fuel = self.core.pop(quantity)
         comp = self.predict(enr_bu)
-        discharge_fuel.comp = comp
+        for iso, val in comp.items():
+            if val < 0:
+                comp[iso] = 0
+        discharge_fuel.transmute(comp)
         self.waste.push(discharge_fuel)
 
     def produce_power(self, produce=True):
