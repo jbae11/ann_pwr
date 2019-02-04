@@ -17,6 +17,10 @@
       <lib>cycamore</lib>
       <name>Source</name>
     </spec>
+<spec>
+  <lib>cycamore</lib>
+  <name>Enrichment</name>
+</spec>
     <spec>
       <lib>ann_lwr.ann_lwr</lib>
       <name>ann_lwr</name>
@@ -24,7 +28,7 @@
   </archetypes>
 
   <control>
-    <duration>100</duration>
+    <duration>70</duration>
     <startmonth>1</startmonth>
     <startyear>2000</startyear>
     <decay>manual</decay>
@@ -53,9 +57,23 @@
         <pickle_path>/home/teddy/github/ann_lwr/ann_model.pkl</pickle_path>
       </ann_lwr>
     </config>
-    <lifetime>50</lifetime>
     <name>ann_lwr</name>
   </facility>
+
+<facility>
+  <name>enrichment</name>
+  <config>
+    <Enrichment>
+      <feed_commod>natl_u</feed_commod>
+      <feed_recipe>natl_u</feed_recipe>
+      <product_commod>fuel</product_commod>
+      <tails_assay>0.003</tails_assay>
+      <tails_commod>waste</tails_commod>
+      <swu_capacity>1e100</swu_capacity>
+      <initial_feed>1e100</initial_feed>
+    </Enrichment>
+  </config>
+</facility>
 
   <facility>
     <name>sink</name>
@@ -71,7 +89,7 @@
     <name>source</name>
     <config>
       <Source>
-        <outcommod>fuel</outcommod>
+        <outcommod>natl_u</outcommod>
       </Source>
     </config>
   </facility>
@@ -98,6 +116,11 @@
           <number>1</number>
         </entry>
 
+        <entry>
+          <prototype>enrichment</prototype>
+          <number>1</number>
+        </entry>
+
       </initialfacilitylist>
       <config><NullInst/></config>
     </institution>
@@ -108,6 +131,19 @@
   <basis>mass</basis>
     <nuclide> <id>U-235</id> <comp>3</comp> </nuclide>
     <nuclide> <id>U-238</id> <comp>97</comp> </nuclide>
+</recipe>
+
+<recipe>
+  <name>natl_u</name>
+  <basis>mass</basis>
+  <nuclide>
+    <id>U-235</id>
+    <comp>0.7</comp>
+  </nuclide>
+  <nuclide>
+    <id>U-238</id>
+    <comp>99.3</comp>
+  </nuclide>
 </recipe>
 
 </simulation>

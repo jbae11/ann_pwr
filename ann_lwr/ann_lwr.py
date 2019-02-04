@@ -96,9 +96,6 @@ class ann_lwr(Facility):
             self.decom_time = self.exit_time
 
     def decision(self):
-        print('Decision')
-        print(self.core.quantity)
-        print(self.waste.quantity)
 
     def tick(self):
         print('tick')
