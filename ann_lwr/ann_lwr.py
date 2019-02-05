@@ -95,25 +95,17 @@ class ann_lwr(Facility):
         else:
             self.decom_time = self.exit_time
 
-    def decision(self):
-
     def tick(self):
-        print('tick')
-        print(self.context.time)
         # If time to decommission, where if decommissioning
         # mid cycle, deplete using weighted average
         # and discharge
         if self.context.time == self.decom_time:
             # burnup is prorated by the ratio
             cycle_step_ratio = self.cycle_step / self.cycle_time
-            print('Gonna decommission')
             for bu in self.burnup_list:
                 prorated_bu = bu * cycle_step_ratio
-                print('Prorated bu')
-                print(prorated_bu)
                 self.transmute_and_discharge(self.batch_mass,
                                              prorated_bu)
-            print('decom return')
             return
 
         if self.cycle_step == self.cycle_time:
@@ -121,16 +113,12 @@ class ann_lwr(Facility):
                 bu = self.burnup_list[self.batch_gen]
             else:
                 bu = self.burnup_list[-1]
-            print('Discharge cycle')
             self.transmute_and_discharge(self.batch_mass,
                                          bu)
             self.batch_gen += 1
         
-        print('Tick end')
 
     def tock(self):
-        print('tock')
-        print(self.context.time)
         if (self.cycle_step >= self.cycle_time + self.refuel_time) and (self.is_core_full()):
             self.cycle_step = 0
 
@@ -142,18 +130,13 @@ class ann_lwr(Facility):
 
         if self.cycle_step > 0 or self.is_core_full():
             self.cycle_step += 1
-        print('Tock end')
-
 
 
     def get_material_bids(self, requests):
         """ Gets material bids that want its 'outcommod' and
             returns bid portfolio
         """
-        print('Get material bids')
         bids = []
-        print(self.core.capacity)
-        print(self.waste.capacity)
         try:
             reqs = requests[self.fuel_outcommod]
             for req in reqs:
@@ -162,27 +145,17 @@ class ann_lwr(Facility):
                 qty = min(req.target.quantity, self.waste.quantity
                 )
                 next_in_line = self.waste.peek()
-                print('qty')
-                print(qty)
-                print(next_in_line.comp())
                 mat = ts.Material.create_untracked(qty, next_in_line.comp())
                 bids.append({'request': req, 'offer': mat})
         except:
             z = 1
-        print('bids end')
         if len(bids) == 0:
             return
-        print('eh')
         port = {'bids': bids}
-        print('ehhh')
-        print(port)
-        print(self.core.quantity)
-        print(self.waste.quantity)
         return port
 
     def get_material_trades(self, trades):
         """ Give out fuel_outcommod from waste buffer"""
-        print('Get material trades')
         responses = {}
         for trade in trades:
             commodity = trade.request.commodity
@@ -196,7 +169,6 @@ class ann_lwr(Facility):
 
     def get_material_requests(self):
         """ Ask for fuel_incommod"""
-        print('Get material requests')
         ports = []
         if self.context.time == self.decom_time:
             return ports
@@ -223,7 +195,6 @@ class ann_lwr(Facility):
 
     def accept_material_trades(self, responses):
         """ Get fuel_incommod and store it into core"""
-        print('Accept material trades')
         for key, mat in responses.items():
             if key.request.commodity == self.fuel_incommod:
                 self.core.push(mat)
@@ -256,14 +227,23 @@ class ann_lwr(Facility):
 
     def transmute_and_discharge(self, quantity, bu):
         # this should ideally be one batch,
-        enr_bu = [[self.get_enrichment(), bu]]
+        if self.batch_gen < self.n_batch:
+           enr = self.enrichment_list[self.batch_gen]
+        else:
+            enr = self.enrichment_list[-1]
+        enr_bu = [[enr, bu]]
+        print(enr_bu)
+        print(self.context.time)
         discharge_fuel = self.core.pop(quantity)
+        print(discharge_fuel.quantity)
         comp = self.predict(enr_bu)
+        print(comp)
         for iso, val in comp.items():
             if val < 0:
                 comp[iso] = 0
         discharge_fuel.transmute(comp)
         self.waste.push(discharge_fuel)
+
 
     def produce_power(self, produce=True):
         if produce:

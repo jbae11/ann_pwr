@@ -28,11 +28,12 @@
   </archetypes>
 
   <control>
-    <duration>70</duration>
+    <duration>200</duration>
     <startmonth>1</startmonth>
     <startyear>2000</startyear>
     <decay>manual</decay>
   </control>
+
 
   <facility>
     <config>
@@ -40,9 +41,9 @@
         <fuel_incommod>fuel</fuel_incommod>
         <fuel_outcommod>unf</fuel_outcommod>
         <burnup_list>
-            <val>20.0</val>
-            <val>40.0</val>
-            <val>60.0</val>
+            <val>20000</val>
+            <val>40000</val>
+            <val>60000</val>
         </burnup_list>
         <enrichment_list>
             <val>2.0</val>
@@ -59,6 +60,7 @@
     </config>
     <name>ann_lwr</name>
   </facility>
+
 
 <facility>
   <name>enrichment</name>
