@@ -116,11 +116,11 @@ class ann_lwr(Facility):
             self.transmute_and_discharge(self.batch_mass,
                                          bu)
             self.batch_gen += 1
-        
+
 
     def tock(self):
         if (self.cycle_step >= self.cycle_time + self.refuel_time) and (self.is_core_full()):
-            self.cycle_step = 0
+            self.cycle_step = 1
 
         # produce power if core is full
         if (self.cycle_step >= 0) and (self.cycle_step < self.cycle_time) and (self.is_core_full()):
@@ -137,18 +137,16 @@ class ann_lwr(Facility):
             returns bid portfolio
         """
         bids = []
-        try:
+        if self.fuel_outcommod in requests.keys():
             reqs = requests[self.fuel_outcommod]
             for req in reqs:
                 if self.waste.empty():
                     break
                 qty = min(req.target.quantity, self.waste.quantity
-                )
+                        )
                 next_in_line = self.waste.peek()
                 mat = ts.Material.create_untracked(qty, next_in_line.comp())
                 bids.append({'request': req, 'offer': mat})
-        except:
-            z = 1
         if len(bids) == 0:
             return
         port = {'bids': bids}
@@ -171,9 +169,9 @@ class ann_lwr(Facility):
         """ Ask for fuel_incommod"""
         ports = []
         if self.context.time == self.decom_time:
-            return ports
+            return []
         if self.is_core_full():
-            return {}
+            return []
 
         if self.batch_gen == 0:
             enr_to_request = self.enrichment_list
@@ -206,13 +204,6 @@ class ann_lwr(Facility):
         else:
             return False
 
-    def get_enrichment(self):
-        """ Returns the average enrichment of fuel in core """
-        in_core_fuel = self.core.pop(self.core.quantity)
-        self.core.push(in_core_fuel)
-        composition = in_core_fuel.comp()
-        return composition[922350000]
-
 
     def predict(self, enr_bu):
         model = self.model_dict['model']
@@ -232,12 +223,8 @@ class ann_lwr(Facility):
         else:
             enr = self.enrichment_list[-1]
         enr_bu = [[enr, bu]]
-        print(enr_bu)
-        print(self.context.time)
         discharge_fuel = self.core.pop(quantity)
-        print(discharge_fuel.quantity)
         comp = self.predict(enr_bu)
-        print(comp)
         for iso, val in comp.items():
             if val < 0:
                 comp[iso] = 0
