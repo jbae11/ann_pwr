@@ -49,8 +49,8 @@
         <n_assem_core>24</n_assem_core>
         <n_assem_batch>8</n_assem_batch>
         <power_cap>1000</power_cap>
-        <cycle_time>18</cycle_time>
-        <refuel_time>1</refuel_time>
+        <cycle_time_eq>18</cycle_time_eq>
+        <refuel_time_eq>1</refuel_time_eq>
         <pickle_path>/home/teddy/github/ann_lwr/ann_model.pkl</pickle_path>
       </ann_lwr>
     </config>
