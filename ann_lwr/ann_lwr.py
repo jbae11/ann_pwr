@@ -30,6 +30,12 @@ class ann_lwr(Facility):
         tooltip="Absolute path to the pickle file"
     )
 
+    # one row would be 2.1_30000 3.1_40000 4.1_50000 etc
+    enr_bu_matrix = ts.VectorString(
+        doc="enrichment and burnup matrix",
+        tooltip="enrichment_burnup column separated by space"
+    )
+
     burnup_list = ts.VectorDouble(
         doc="Burnup list for n batches",
         tooltip="Burnup list for n batches"
@@ -40,14 +46,19 @@ class ann_lwr(Facility):
         tooltip="Enrichment list for n batches"
     )
 
-    n_batch = ts.Int(
-        doc="Number of batches",
-        tooltip="Number of batches for reactor"
+    n_assem_core = ts.Int(
+        doc="Number of assemblies",
+        tooltip="Number of assemblies in core"
     )
 
-    batch_mass = ts.Double(
-        doc="Mass per batch",
-        tooltip="Mass per batch"
+    n_assem_batch = ts.Int(
+        doc="Number of assemblies per batch",
+        tooltip="Number of assemblies per batch"
+    )
+
+    assem_size = ts.Double(
+        doc="Assembly mass",
+        tooltip="Assembly mass"
     )
 
     power_cap = ts.Double(
@@ -80,15 +91,19 @@ class ann_lwr(Facility):
         self.model_dict['iso_list'][other_index] = 'h-1'
         self.iso_list = self.model_dict['iso_list']
 
-        # input consistency checking:
-        if len(self.burnup_list) != self.n_batch or len(self.enrichment_list) != self.n_batch:
-            raise ValueError('Burnup and Enrichment list length has to match n_batch')
+        # check if it's integer batches
+        if (self.n_assem_core / self.n_assem_batch)%1 != 0:
+            raise ValueError('Sorry can only do integer batches')
+
+        # input consistency checking
+        self.enr_matrix, self.bu_matrix = self.check_enr_bu_matrix()
 
         # set core capacity
-        self.core.capacity = self.n_batch * self.batch_mass
+        self.core.capacity = self.n_assem_core * self.assem_size
 
         self.cycle_step = 0
         self.batch_gen = 0
+        self.n_batch = int(self.n_assem_core / self.n_assem_batch)
         # if no exit time, exit time is 1e5
         if self.exit_time == -1:
             self.decom_time = 1e5
@@ -102,19 +117,20 @@ class ann_lwr(Facility):
         if self.context.time == self.decom_time:
             # burnup is prorated by the ratio
             cycle_step_ratio = self.cycle_step / self.cycle_time
-            for bu in self.burnup_list:
-                prorated_bu = bu * cycle_step_ratio
-                self.transmute_and_discharge(self.batch_mass,
-                                             prorated_bu)
+            for index, bu_list in enumerate(self.bu_matrix):
+                prorated_bu_list = bu_list * cycle_step_ratio
+                self.transmute_and_discharge(prorated_bu_list,
+                                             self.enr_matrix[index])
             return
 
         if self.cycle_step == self.cycle_time:
             if self.batch_gen < self.n_batch:
-                bu = self.burnup_list[self.batch_gen]
+                i = self.batch_gen
             else:
-                bu = self.burnup_list[-1]
-            self.transmute_and_discharge(self.batch_mass,
-                                         bu)
+                i = -1
+            bu_list = self.bu_matrix[i]
+            self.transmute_and_discharge(bu_list,
+                                         self.enr_matrix[i])
             self.batch_gen += 1
 
 
@@ -173,21 +189,33 @@ class ann_lwr(Facility):
         if self.is_core_full():
             return []
 
-        if self.batch_gen == 0:
-            enr_to_request = self.enrichment_list
-        else:
-            enr_to_request = [self.enrichment_list[-1]]
-
         recipes = {}
         qty = {}
         mat = {}
-        for enrichment in enr_to_request:
-            comp = {'u-238': 100-enrichment,
-                    'u-235': enrichment}
-            qty = self.batch_mass
-            mat = ts.Material.create_untracked(qty, comp)
-            ports.append({'commodities' : {self.fuel_incommod: mat},
-                          'constraints': qty})
+
+        # initial core loading
+        if self.batch_gen == 0:
+            enr_to_request = self.enr_matrix
+            for i in range(np.shape(enr_to_request)[0]):
+                for j in range(np.shape(enr_to_request)[1]):
+                    comp = {'u-238': 100-enr_to_request[i,j],
+                            'u-235': enr_to_request[i,j]}
+                    qty = self.assem_size
+                    mat = ts.Material.create_untracked(qty, comp)
+                    ports.append({'commodities': {self.fuel_incommod: mat},
+                                  'constraints': qty})
+
+        # subsequent equilibrium batch loading
+        else:
+            enr_to_request = self.enr_matrix[-1]
+            for enrichment in enr_to_request:
+                comp = {'u-238': 100-enrichment,
+                        'u-235': enrichment}
+                qty = self.assembly_size
+                mat = ts.Material.create_untracked(qty, comp)
+                ports.append({'commodities' : {self.fuel_incommod: mat},
+                              'constraints': qty})
+
         return ports
 
 
@@ -199,7 +227,7 @@ class ann_lwr(Facility):
 
 
     def is_core_full(self):
-        if self.core.quantity == self.core.capacity:
+        if self.core.count == self.n_assem_core:
             return True
         else:
             return False
@@ -212,24 +240,25 @@ class ann_lwr(Facility):
                 model.predict(x))[0]
         comp_dict = {}
         for indx, iso in enumerate(self.iso_list):
+            # zero if model predicts negative
+            if y[indx] < 0:
+                y[indx] = 0
             comp_dict[iso] = y[indx]
         return comp_dict
 
 
-    def transmute_and_discharge(self, quantity, bu):
+    def transmute_and_discharge(self, bu_list, enr_list):
         # this should ideally be one batch,
         if self.batch_gen < self.n_batch:
            enr = self.enrichment_list[self.batch_gen]
         else:
             enr = self.enrichment_list[-1]
-        enr_bu = [[enr, bu]]
-        discharge_fuel = self.core.pop(quantity)
-        comp = self.predict(enr_bu)
-        for iso, val in comp.items():
-            if val < 0:
-                comp[iso] = 0
-        discharge_fuel.transmute(comp)
-        self.waste.push(discharge_fuel)
+        for indx, bu in enumerate(bu_list):
+            enr_bu = [[enr_list[indx],bu]]
+            discharge_fuel = self.core.pop()
+            comp = self.predict(enr_bu)
+            discharge_fuel.transmute(comp)
+            self.waste.push(discharge_fuel)
 
 
     def produce_power(self, produce=True):
@@ -237,4 +266,31 @@ class ann_lwr(Facility):
             lib.record_time_series(lib.POWER, self, float(self.power_cap))
         else:
             lib.record_time_series(lib.POWER, self, 0)
+
+
+    def check_enr_bu_matrix():
+        # parse bu enr matrix
+        empty = np.zeros(len(self.enr_bu_matrix[0].split(' ')))
+        print(empty)
+
+        for i in self.enr_bu_matrix:
+            entry = np.array(i.split(' '))
+            if len(entry) != self.n_assem_batch:
+                raise ValueError('The length of entry has to match n_assem_batch')
+            try:
+                empty = np.vstack((empty, entry))
+            except ValueError:
+                print('Your length of entries per batch are inconsistent!')
+        matrix = empty[1:]
+
+        # separate bu and enrichment
+        sep = np.char.split(matrix, '_')
+        bu_matrix = np.empty(np.shape(matrix), dtype='object')
+        bu_matrix = np.empty(np.shape(matrix), dtype='object')
+        for i in range(np.shape(sep)[0]):
+            for j in range(np.shape(sep)[1]):
+                enr_matrix[i,j] = sep[i,j][0]
+                bu_matrix[i,j] = sep[i,j][1]
+
+        return enr_matrix, bu_matrix
 
