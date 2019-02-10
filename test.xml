@@ -51,7 +51,7 @@
         <power_cap>1000</power_cap>
         <cycle_time_eq>18</cycle_time_eq>
         <refuel_time_eq>1</refuel_time_eq>
-        <pickle_path>/home/teddy/github/ann_lwr/ann_model.pkl</pickle_path>
+        <pickle_path>/home/teddy/github/ann_pwr/ann_model.pkl</pickle_path>
       </ann_lwr>
     </config>
     <name>ann_lwr</name>

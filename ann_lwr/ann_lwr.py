@@ -88,6 +88,8 @@ class ann_lwr(Facility):
         # input consistency checking
         self.enr_matrix, self.bu_matrix = self.check_enr_bu_matrix()
 
+        # !!
+        self.f = open('f.txt', 'w')
         # set initial cycle and refuel time
         t = self.context.time
         self.cycle_time = int(eval(self.cycle_time_eq))
@@ -190,7 +192,6 @@ class ann_lwr(Facility):
         recipes = {}
         qty = {}
         mat = {}
-
         # initial core loading
         if self.batch_gen == 0:
             enr_to_request = self.enr_matrix
@@ -200,16 +201,16 @@ class ann_lwr(Facility):
                             'u-235': enr_to_request[i,j]}
                     qty = self.assem_size
                     mat = ts.Material.create_untracked(qty, comp)
+
                     ports.append({'commodities': {self.fuel_incommod: mat},
                                   'constraints': qty})
-
         # subsequent equilibrium batch loading
         else:
             enr_to_request = self.enr_matrix[-1]
             for enrichment in enr_to_request:
                 comp = {'u-238': 100-enrichment,
                         'u-235': enrichment}
-                qty = self.assembly_size
+                qty = self.assem_size
                 mat = ts.Material.create_untracked(qty, comp)
                 ports.append({'commodities' : {self.fuel_incommod: mat},
                               'constraints': qty})
@@ -248,9 +249,9 @@ class ann_lwr(Facility):
     def transmute_and_discharge(self, bu_list, enr_list):
         # this should ideally be one batch,
         if self.batch_gen < self.n_batch:
-           enr = self.enrichment_list[self.batch_gen]
+           enr = enr_list[self.batch_gen]
         else:
-            enr = self.enrichment_list[-1]
+            enr = enr_list[-1]
         for indx, bu in enumerate(bu_list):
             enr_bu = [[enr_list[indx],bu]]
             discharge_fuel = self.core.pop()
@@ -266,10 +267,9 @@ class ann_lwr(Facility):
             lib.record_time_series(lib.POWER, self, 0)
 
 
-    def check_enr_bu_matrix():
+    def check_enr_bu_matrix(self):
         # parse bu enr matrix
         empty = np.zeros(len(self.enr_bu_matrix[0].split(' ')))
-        print(empty)
 
         for i in self.enr_bu_matrix:
             entry = np.array(i.split(' '))
@@ -283,12 +283,12 @@ class ann_lwr(Facility):
 
         # separate bu and enrichment
         sep = np.char.split(matrix, '_')
-        bu_matrix = np.empty(np.shape(matrix), dtype='object')
-        bu_matrix = np.empty(np.shape(matrix), dtype='object')
+        bu_matrix = np.zeros(np.shape(matrix))
+        enr_matrix = np.zeros(np.shape(matrix))
         for i in range(np.shape(sep)[0]):
             for j in range(np.shape(sep)[1]):
-                enr_matrix[i,j] = sep[i,j][0]
-                bu_matrix[i,j] = sep[i,j][1]
+                enr_matrix[i,j] = float(sep[i,j][0])
+                bu_matrix[i,j] = float(sep[i,j][1])
 
         return enr_matrix, bu_matrix
 
