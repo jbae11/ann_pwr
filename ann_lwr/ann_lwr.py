@@ -36,16 +36,6 @@ class ann_lwr(Facility):
         tooltip="enrichment_burnup column separated by space"
     )
 
-    burnup_list = ts.VectorDouble(
-        doc="Burnup list for n batches",
-        tooltip="Burnup list for n batches"
-    )
-
-    enrichment_list = ts.VectorDouble(
-        doc="Enrichment list for n batches",
-        tooltip="Enrichment list for n batches"
-    )
-
     n_assem_core = ts.Int(
         doc="Number of assemblies",
         tooltip="Number of assemblies in core"

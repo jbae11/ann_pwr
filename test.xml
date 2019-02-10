@@ -40,18 +40,14 @@
       <ann_lwr>
         <fuel_incommod>fuel</fuel_incommod>
         <fuel_outcommod>unf</fuel_outcommod>
-        <burnup_list>
-            <val>20000</val>
-            <val>40000</val>
-            <val>60000</val>
-        </burnup_list>
-        <enrichment_list>
-            <val>2.0</val>
-            <val>2.5</val>
-            <val>3.2</val>
-        </enrichment_list>
-        <n_batch>3</n_batch>
-        <batch_mass>30000</batch_mass>
+        <enr_bu_matrix>
+            <val>2.1_30000 3.1_30000 3.1_30000 3.1_30000 3.1_30000 4.1_30000 4.1_30000 3.1_30000</val>
+            <val>3.1_32000 3.1_34000 3.1_40000 3.1_36000 3.1_39000 4.1_32000 3.5_40000 3.2_36000</val>
+            <val>2.1_33000 3.5_34000 3.2_43000 2.8_43100 3.1_28000 4.5_42000 3.1_23555 3.1_30000</val>
+        </enr_bu_matrix>
+        <assem_size>30000</assem_size>
+        <n_assem_core>24</n_assem_core>
+        <n_assem_batch>8</n_assem_batch>
         <power_cap>1000</power_cap>
         <cycle_time>18</cycle_time>
         <refuel_time>1</refuel_time>
