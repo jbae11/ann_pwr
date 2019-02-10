@@ -56,14 +56,14 @@ class ann_lwr(Facility):
         tooltip="Power capacity of reactor",
     )
 
-    cycle_time = ts.Int(
-        doc="cycle time of reactor",
-        tooltip="Cycle time of reactor"
+    cycle_time_eq = ts.String(
+        doc="cycle time of reactor equation",
+        tooltip="Cycle time of reactor equation"
     )
 
-    refuel_time = ts.Int(
-        doc="Refuel time of reactor",
-        tooltip="Refuel time of reactor"
+    refuel_time_eq = ts.String(
+        doc="Refuel time of reactor equation",
+        tooltip="Refuel time of reactor equation"
     )
 
     core = ts.ResBufMaterialInv()
@@ -87,6 +87,11 @@ class ann_lwr(Facility):
 
         # input consistency checking
         self.enr_matrix, self.bu_matrix = self.check_enr_bu_matrix()
+
+        # set initial cycle and refuel time
+        t = self.context.time
+        self.cycle_time = int(eval(self.cycle_time_eq))
+        self.refuel_time = int(eval(self.refuel_time_eq))
 
         # set core capacity
         self.core.capacity = self.n_assem_core * self.assem_size
@@ -126,6 +131,9 @@ class ann_lwr(Facility):
 
     def tock(self):
         if (self.cycle_step >= self.cycle_time + self.refuel_time) and (self.is_core_full()):
+            t = self.context.time
+            self.cycle_time = int(eval(self.cycle_time_eq))
+            self.refuel_time = int(eval(self.refuel_time_eq))
             self.cycle_step = 1
 
         # produce power if core is full
