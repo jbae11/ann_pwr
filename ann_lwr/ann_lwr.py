@@ -92,8 +92,8 @@ class ann_lwr(Facility):
         self.f = open('f.txt', 'w')
         # set initial cycle and refuel time
         t = self.context.time
-        self.cycle_time = int(eval(self.cycle_time_eq))
-        self.refuel_time = int(eval(self.refuel_time_eq))
+        self.cycle_time = max(0, int(eval(self.cycle_time_eq)))
+        self.refuel_time = max(0, int(eval(self.refuel_time_eq)))
 
         # set core capacity
         self.core.capacity = self.n_assem_core * self.assem_size
@@ -134,8 +134,8 @@ class ann_lwr(Facility):
     def tock(self):
         if (self.cycle_step >= self.cycle_time + self.refuel_time) and (self.is_core_full()):
             t = self.context.time
-            self.cycle_time = int(eval(self.cycle_time_eq))
-            self.refuel_time = int(eval(self.refuel_time_eq))
+            self.cycle_time = max(0, int(eval(self.cycle_time_eq)))
+            self.refuel_time = max(0, int(eval(self.refuel_time_eq)))
             self.cycle_step = 1
 
         # produce power if core is full
