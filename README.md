@@ -19,6 +19,16 @@ the input is the following:
     <val>2.1_33000 3.5_34000 3.2_43000 2.8_43100 3.1_28000 4.5_42000 3.1_23555 3.1_30000</val>
 </enr_bu_matrix>
 ```
+The numbers could also be equations. For example, if the user wanted the
+burnup of the equilibrium fuel to increase by 1% every month:
+```
+<enr_bu_matrix>
+    <val>2.1_30000 3.1_30000 3.1_30000 3.1_30000 3.1_30000 4.1_30000 4.1_30000 3.1_30000</val>
+    <val>3.1_32000 3.1_34000 3.1_40000 3.1_36000 3.1_39000 4.1_32000 3.5_40000 3.2_36000</val>
+    <val>2.1_33000*(1.01)**t 3.5_34000*(1.01)**t 3.2_43000*(1.01)**t 2.8_43100*(1.01)**t 3.1_28000*(1.01)**t 4.5_42000*(1.01)**t 3.1_23555*(1.01)**t 3.1_30000*(1.01)**t</val>
+</enr_bu_matrix>
+```
+
 Currently, only integer batches are accepted.
 
 When decommissioning, the reactor will asses how long the
