@@ -192,13 +192,15 @@ class ann_lwr(Facility):
         recipes = {}
         qty = {}
         mat = {}
+        t = self.context.time
         # initial core loading
         if self.batch_gen == 0:
             enr_to_request = self.enr_matrix
             for i in range(np.shape(enr_to_request)[0]):
                 for j in range(np.shape(enr_to_request)[1]):
-                    comp = {'u-238': 100-enr_to_request[i,j],
-                            'u-235': enr_to_request[i,j]}
+                    enr = eval(enr_to_request[i,j])
+                    comp = {'u-238': 100-enr,
+                            'u-235': enr}
                     qty = self.assem_size
                     mat = ts.Material.create_untracked(qty, comp)
 
@@ -208,8 +210,9 @@ class ann_lwr(Facility):
         else:
             enr_to_request = self.enr_matrix[-1]
             for enrichment in enr_to_request:
-                comp = {'u-238': 100-enrichment,
-                        'u-235': enrichment}
+                enr = eval(enrichment)
+                comp = {'u-238': 100-enr,
+                        'u-235': enr}
                 qty = self.assem_size
                 mat = ts.Material.create_untracked(qty, comp)
                 ports.append({'commodities' : {self.fuel_incommod: mat},
@@ -248,12 +251,15 @@ class ann_lwr(Facility):
 
     def transmute_and_discharge(self, bu_list, enr_list):
         # this should ideally be one batch,
+        t = self.context.time
         if self.batch_gen < self.n_batch:
            enr = enr_list[self.batch_gen]
         else:
             enr = enr_list[-1]
         for indx, bu in enumerate(bu_list):
-            enr_bu = [[enr_list[indx],bu]]
+            enr_bu = [[eval(enr_list[indx]),eval(bu)]]
+            print('Transmuting fuel with enrichment, burnup:')
+            print(enr_bu)
             discharge_fuel = self.core.pop()
             comp = self.predict(enr_bu)
             discharge_fuel.transmute(comp)
@@ -283,12 +289,12 @@ class ann_lwr(Facility):
 
         # separate bu and enrichment
         sep = np.char.split(matrix, '_')
-        bu_matrix = np.zeros(np.shape(matrix))
-        enr_matrix = np.zeros(np.shape(matrix))
+        bu_matrix = np.empty(np.shape(matrix), dtype=object)
+        enr_matrix = np.empty(np.shape(matrix), dtype=object)
         for i in range(np.shape(sep)[0]):
             for j in range(np.shape(sep)[1]):
-                enr_matrix[i,j] = float(sep[i,j][0])
-                bu_matrix[i,j] = float(sep[i,j][1])
+                enr_matrix[i,j] = sep[i,j][0]
+                bu_matrix[i,j] = sep[i,j][1]
 
         return enr_matrix, bu_matrix
 
